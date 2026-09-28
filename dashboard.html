@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pengantin - Nikahgan.id</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://jsdelivr.net"></script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col md:flex-row">
+
+    <!-- 1. SIDEBAR NAVIGATION -->
+    <aside class="w-full md:w-64 bg-slate-900 text-slate-300 flex flex-col justify-between p-6">
+        <div>
+            <div class="mb-8">
+                <span class="text-xl font-black text-white tracking-tight">nikahgan<span class="text-rose-500">.id</span></span>
+                <p class="text-xs text-slate-500 mt-1">Panel Kontrol Pengantin</p>
+            </div>
+            <nav class="space-y-2">
+                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-rose-600 text-white font-semibold transition">
+                    <i class="fa-solid fa-gauge w-5"></i> Dasbor Utama
+                </a>
+                <a href="#tamu" onclick="alert('Fitur Daftar Tamu segera hadir di langkah berikutnya!')" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition text-sm">
+                    <i class="fa-solid fa-users w-5"></i> Daftar Tamu & RSVP
+                </a>
+            </nav>
+        </div>
+        <div class="pt-6 border-t border-slate-800">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-9 h-9 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-sm" id="user-initial">P</div>
+                <div class="truncate">
+                    <p class="text-sm font-bold text-white truncate" id="user-nama">Pengantin</p>
+                    <span class="text-xs text-emerald-400 flex items-center gap-1">● Akun Aktif</span>
+                </div>
+            </div>
+            <button onclick="logout()" class="w-full py-2.5 px-4 bg-slate-800 hover:bg-rose-950 hover:text-rose-400 text-slate-400 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-from-bracket"></i> Keluar Sistem
+            </button>
+        </div>
+    </aside>
+
+    <!-- 2. MAIN CONTENT AREA -->
+    <main class="flex-grow p-4 sm:p-8 lg:p-12 overflow-y-auto">
+        <header class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-serif font-bold text-slate-900">Kelola Informasi Pernikahan</h1>
+                <p class="text-sm text-slate-500">Isi data di bawah ini untuk memperbarui isi website undangan digital Anda secara instan.</p>
+            </div>
+        </header>
+
+        <!-- FORM INPUT UTAMA DATA PERNIKAHAN -->
+        <form id="form-undangan" class="space-y-8 max-w-4xl">
+            
+            <!-- BLOK 1: URL & LINK UNIK -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-link text-rose-500"></i> Pengaturan Tautan Undangan</h3>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Custom URL Slug</label>
+                    <div class="flex rounded-xl shadow-sm border border-slate-200 overflow-hidden bg-slate-50">
+                        <span class="inline-flex items-center px-4 text-slate-400 text-sm border-r border-slate-200">nikahgan.id/</span>
+                        <input type="text" id="inv-slug" required class="w-full px-4 py-3 focus:outline-none bg-white text-sm" placeholder="budi-rara">
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">Gunakan huruf kecil, angka, atau tanda hubung saja (tanpa spasi).</p>
+                </div>
+            </div>
+
+            <!-- BLOK 2: DATA MEMPELAI -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm grid sm:grid-cols-2 gap-6">
+                <!-- Mempelai Pria -->
+                <div class="space-y-4">
+                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-mars text-blue-500"></i> Mempelai Pria</h3>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Lengkap Pria</label>
+                        <input type="text" id="inv-pria-lengkap" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Budi Darmawan">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Panggilan Pria</label>
+                        <input type="text" id="inv-pria-panggilan" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Budi">
+                    </div>
+                </div>
+
+                <!-- Mempelai Wanita -->
+                <div class="space-y-4">
+                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-venus text-pink-500"></i> Mempelai Wanita</h3>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Lengkap Wanita</label>
+                        <input type="text" id="inv-wanita-lengkap" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Rara Lestari">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Panggilan Wanita</label>
+                        <input type="text" id="inv-wanita-panggilan" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Rara">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOK 3: INFORMASI ACARA -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm grid sm:grid-cols-2 gap-6">
+                <!-- Info Akad -->
+                <div class="space-y-4">
+                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500"></i> Waktu & Tempat Akad</h3>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tanggal Akad</label>
+                        <input type="date" id="inv-akad-tanggal" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tempat / Gedung Akad</label>
+                        <input type="text" id="inv-akad-tempat" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Masjid Agung Al-Barkah">
+                    </div>
+                </div>
+
+                <!-- Info Resepsi -->
+                <div class="space-y-4">
+                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-champagne-glasses text-amber-500"></i> Waktu & Tempat Resepsi</h3>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tanggal Resepsi</label>
+                        <input type="date" id="inv-resepsi-tanggal" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tempat / Gedung Resepsi</label>
+                        <input type="text" id="inv-resepsi-tempat" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Gedung Serbaguna Permata">
+                    </div>
+                </div>
+            </div>
+
+            <!-- POP-UP NOTIFIKASI SIMPAN -->
+            <div id="dash-pesan" class="hidden p-4 rounded-xl text-sm font-semibold text-center"></div>
+
+            <!-- ACTION BUTTON -->
+            <div class="flex justify-end">
+                <button type="submit" id="btn-simpan" class="px-8 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition shadow-lg shadow-rose-600/20 flex items-center gap-2">
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan Data Undangan
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Supabase JS Library -->
+    <script src="https://jsdelivr.net"></script>
+    <script>
+        // Inisialisasi Jembatan Database Supabase
+        const supabaseUrl = 'https://supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhrYXZkb2xrY2FhZ2ltbmlhaWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1ODM3MDcsImV4cCI6MjEwNjE1OTcwN30.p3t96xEumXdpxJWbi7eAmjFWMhb2_nEYITgvro4YaTI'; 
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Proteksi Halaman Sederhana (Cek Sesi Login di Browser)
+        const sessionData = localStorage.getItem('user_session');
