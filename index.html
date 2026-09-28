@@ -1,1 +1,145 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikahgan.id - Platform Undangan Digital Premium & Estetik</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://jsdelivr.net"></script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-rose-500 selection:text-white">
+
+    <!-- 1. NAVIGATION BAR -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl font-black text-rose-600 tracking-tight">nikahgan<span class="text-slate-400">.id</span></span>
+                </div>
+                <div class="hidden md:flex items-center gap-8 font-medium text-slate-600">
+                    <a href="#fitur" class="hover:text-rose-600 transition">Fitur</a>
+                    <a href="#harga" class="hover:text-rose-600 transition">Harga</a>
+                    <a href="#register-section" class="hover:text-rose-600 transition">Daftar</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="#register-section" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition shadow-md shadow-rose-600/20">Buat Undangan</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <section class="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-rose-50/50 to-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-800 mb-6">
+                    ✨ #1 Platform Undangan Pernikahan Masa Kini
+                </span>
+                <h1 class="text-4xl sm:text-6xl font-serif text-slate-900 leading-tight mb-6">
+                    Undangan Pernikahan <span class="text-rose-600 italic">Digital</span> Estetik & Instan
+                </h1>
+                <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+                    Bagikan momen kebahagiaan Anda ke seluruh dunia secara praktis. Lengkap dengan konfirmasi RSVP otomatis, musik latar, navigasi peta, hingga amplop digital tanpa batas tamu.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#register-section" class="w-full sm:w-auto text-center bg-rose-600 hover:bg-rose-700 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-rose-600/30 transition transform hover:-translate-y-0.5">
+                        Mulai Buat Akun
+                    </a>
+                    <a href="#harga" class="w-full sm:w-auto text-center border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 px-8 py-4 rounded-full font-bold transition">
+                        Lihat Paket Harga
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. FORM REGISTRASI PENGGUNA -->
+    <section id="register-section" class="py-12 bg-white">
+        <div class="max-w-md mx-auto px-4">
+            <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/70">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-serif font-bold text-slate-900 mb-2">Daftar Akun Pengantin</h2>
+                    <p class="text-sm text-slate-500">Mulai langkah awal untuk membuat undangan digital Anda</p>
+                </div>
+
+                <form id="form-registrasi" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Lengkap</label>
+                        <input type="text" id="reg-nama" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Nama Lengkap Anda">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Email</label>
+                        <input type="email" id="reg-email" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="nama@email.com">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nomor WhatsApp</label>
+                        <input type="tel" id="reg-whatsapp" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="08123456xxx">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Password</label>
+                        <input type="password" id="reg-password" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="••••••••">
+                    </div>
+
+                    <div id="reg-pesan" class="hidden p-3.5 rounded-xl text-sm font-semibold text-center"></div>
+
+                    <button type="submit" id="btn-submit" class="w-full py-3.5 px-4 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition shadow-lg shadow-rose-600/20 flex justify-center items-center">
+                        <span>Buat Akun Sekarang</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PRICING TIER SECTION -->
+    <section id="harga" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl font-serif font-bold text-slate-900 mb-4">Pilihan Paket Transparan</h2>
+                <p class="text-slate-600">Sesuaikan dengan kebutuhan acara Anda tanpa biaya tersembunyi.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                <!-- Paket Free -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Free Trial</h3>
+                        <p class="text-sm text-slate-500 mb-6">Coba kelayakan fitur dasbor kami.</p>
+                        <div class="mb-6"><span class="text-4xl font-extrabold text-slate-900">Rp 0</span><span class="text-slate-500 text-sm"> / 7 Hari</span></div>
+                        <ul class="space-y-3.5 text-sm text-slate-600 border-t border-slate-100 pt-6">
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Maksimal 50 Tamu (RSVP)</li>
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> 3 Pilihan Tema Standar</li>
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Musik Standar & 5 Foto</li>
+                        </ul>
+                    </div>
+                    <a href="#register-section" class="mt-8 text-center w-full py-3 px-4 border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition">Mulai Coba</a>
+                </div>
+
+                <!-- Paket Premium -->
+                <div class="bg-white p-8 rounded-3xl border-2 border-rose-500 relative flex flex-col justify-between shadow-xl shadow-rose-600/5">
+                    <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-rose-500 text-white text-xs font-bold tracking-wider uppercase px-4 py-1 rounded-full">Paling Populer</span>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Premium Retail</h3>
+                        <p class="text-sm text-slate-500 mb-6">Sempurna untuk kebutuhan pernikahan penuh.</p>
+                        <div class="mb-6"><span class="text-4xl font-extrabold text-slate-900">Rp 99.000</span><span class="text-slate-500 text-sm"> / Tahun</span></div>
+                        <ul class="space-y-3.5 text-sm text-slate-600 border-t border-slate-100 pt-6">
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> <strong>Tanpa Batas Tamu (Unlimited)</strong></li>
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Akses Semua Tema Premium</li>
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i> Custom Musik & Maks 30 Foto</li>
+                        </ul>
+                    </div>
+                    <a href="#register-section" class="mt-8 text-center w-full py-3 px-4 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-xl transition shadow-lg shadow-rose-600/20">Pilih Premium</a>
+                </div>
+
+                <!-- Paket Exclusive -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between">
