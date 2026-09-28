@@ -1,1 +1,155 @@
-
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NIKAHGAN ID V6 - Pro Max Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600&family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+:root{--gold:#C5A572;--dark:#1A1A1A;--cream:#FFFBF5;--gold2:#D4B78F}
+body{background:var(--cream);color:#222;overflow-x:hidden}
+.hdr{padding:16px;text-align:center;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);position:sticky;top:0;z-index:30;box-shadow:0 2px 20px rgba(0,0,0,.05)}
+.logo{font-family:'Playfair Display';font-size:28px;font-weight:800;letter-spacing:.5px}.logo span{color:var(--gold)}
+.tag{font-size:9px;letter-spacing:5px;color:#999;margin-top:2px}
+.wrap{max-width:960px;margin:auto;padding:14px}
+.hero{text-align:center;padding:24px 0 10px}
+.hero h1{font-family:'Playfair Display';font-size:32px;line-height:1.15}.hero h1 b{color:var(--gold);font-style:italic}
+.hero p{font-size:11px;color:#999;margin-top:8px;letter-spacing:1px}
+.grid6{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.card{border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.06);cursor:pointer;border:2.5px solid transparent;transition:.25s}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
+.card.active{border-color:var(--gold);transform:scale(1.03)}
+.th{height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:26px;position:relative}
+.th small{font-size:10px;font-weight:500;margin-top:4px;opacity:.7;letter-spacing:2px}
+.t-m{background:linear-gradient(135deg,#FFFFFF,#F0EDE8);color:#1a1a1a;border:1px solid #eee}.t-j{background:linear-gradient(135deg,#4E342E 0%,#8D6E63 50%,#D7CCC8 100%);color:#FFD54F}
+.t-i{background:linear-gradient(135deg,#1B3A2D 0%,#2E7D5B 100%);color:#FFD700}.t-f{background:linear-gradient(135deg,#FFF0F3,#FFC2D1);color:#880E4F}
+.t-s{background:linear-gradient(135deg,#B71C1C,#FF6F61 50%,#FFAB91 100%);color:#FFF9C4}.t-l{background:linear-gradient(135deg,#0A0A0A,#2A2A2A);color:var(--gold)}
+.inf{padding:10px 12px}.inf h3{font-size:12px;font-weight:600}.inf p{font-size:9px;color:#999;margin-top:2px}
+.panel{background:#fff;border-radius:22px;padding:20px;margin-top:20px;box-shadow:0 12px 32px rgba(0,0,0,.06);border:1px solid #faf6f0}
+.panel h2{font-family:'Playfair Display';font-size:18px}.panel h2 span{color:var(--gold)}
+label{font-size:11px;font-weight:600;color:#666;margin-top:14px;display:block}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:14px;border:1.5px solid #eee;margin-top:6px;font-size:13px;transition:.2s}
+input:focus,textarea:focus,select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px rgba(197,165,114,.15)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{width:100%;padding:14px;background:var(--dark);color:#fff;border:none;border-radius:14px;font-weight:700;margin-top:16px;cursor:pointer;letter-spacing:.5px;transition:.2s}
+.btn:hover{background:#000;transform:translateY(-1px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111}
+.prevBox{margin-top:16px;padding:16px;border:2px dashed var(--gold);border-radius:16px;background:#FFFDF7;display:none;word-break:break-all;font-size:11px}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.cd-box{background:#111;color:#fff;border-radius:12px;padding:10px;text-align:center}
+.cd-box b{font-size:20px;display:block;font-family:'Playfair Display'}.cd-box span{font-size:8px;letter-spacing:1px;color:var(--gold)}
+#invView{display:none;background:#fff}
+.cover{padding:32px 20px;text-align:center;min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 50% 20%, rgba(197,165,114,.15), transparent 70%);pointer-events:none}
+.cover h1{font-family:'Great Vibes';font-size:56px;color:var(--gold);position:relative;z-index:1}
+.badge{display:inline-block;padding:7px 16px;background:#111;color:#fff;border-radius:100px;font-size:9px;letter-spacing:3px;margin-bottom:16px;position:relative;z-index:1}
+.section{padding:36px 20px;text-align:center;max-width:720px;margin:auto;animation:fadeUp.8s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.section h2{font-family:'Playfair Display';font-size:28px;margin-bottom:8px}
+.section h2 em{color:var(--gold);font-style:italic;font-family:'Cormorant Garamond';font-weight:600}
+.coupleCard{background:linear-gradient(135deg,#FFFBF5,#FFF8EE);border-radius:22px;padding:18px;display:flex;gap:14px;align-items:center;text-align:left;margin-top:14px;border:1px solid #F5EDE0;box-shadow:0 8px 20px rgba(197,165,114,.12)}
+.coupleCard img{width:88px;height:88px;border-radius:50%;object-fit:cover;background:#e8e0d0;border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.1)}.coupleCard h3{font-size:15px;font-family:'Playfair Display'}.coupleCard.anak{font-size:11px;color:#888;margin-top:2px}.coupleCard.ig{font-size:11px;color:var(--gold);margin-top:4px;font-weight:600}
+.timeline{border-left:2.5px solid var(--gold);margin:22px 0 0 12px;padding-left:20px;text-align:left}
+.timeline.item{margin-bottom:20px;position:relative}
+.timeline.item::before{content:'';width:12px;height:12px;background:var(--gold);border:3px solid #fff;box-shadow:0 0 0 2px var(--gold);border-radius:50%;position:absolute;left:-27px;top:4px}
+.timeline.item h4{font-size:13px;font-family:'Playfair Display'}.timeline.item p{font-size:11px;color:#777;margin-top:4px;line-height:1.6}
+.giftBox{background:linear-gradient(135deg,#111,#222);color:#fff;border-radius:20px;padding:18px;margin-top:14px;text-align:left;box-shadow:0 10px 24px rgba(0,0,0,.2)}
+.rek{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.08);padding:12px;border-radius:12px;margin-top:10px;backdrop-filter:blur(4px)}
+.rek b{font-size:12px}.copy{padding:7px 12px;background:var(--gold);border:none;border-radius:9px;font-size:10px;font-weight:700;cursor:pointer;color:#111}
+.videoWrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:18px;margin-top:14px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.videoWrap iframe{position:absolute;top:0;left:0;width:100%;height:100%}
+.photoGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.photoGrid img{width:100%;height:160px;object-fit:cover;border-radius:16px;box-shadow:0 6px 16px rgba(0,0,0,.1)}
+.musicBtn{position:fixed;bottom:20px;right:20px;width:44px;height:44px;background:#111;color:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--gold);z-index:50;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+</style></head><body>
+<div id="builderView">
+<div class="hdr"><div class="logo">NIKAH<span>GAN</span> ID</div><div class="tag">V6 PRO MAX • PREMIUM 199RB</div></div>
+<div class="wrap">
+<div class="hero"><h1>Undangan Cantik <b>10 Menit</b> Jadi 💎</h1><p>FOTO BULAT • VIDEO YT • LIVE • COUNTDOWN • MUSIK • HADIAH 2 REK • E-WALLET</p></div>
+<div class="grid6">
+<div class="card active" data-theme="Modern Minimalis"><div class="th t-m"><span style="font-size:32px">🤍</span><small>MODERN</small></div><div class="inf"><h3>Modern Minimalis</h3><p>Bersih Elegan</p></div></div>
+<div class="card" data-theme="Jawa Klasik"><div class="th t-j">BATIK<small>Jawa Klasik</small></div><div class="inf"><h3>Jawa Klasik</h3><p>Coklat Emas</p></div></div>
+<div class="card" data-theme="Islami Gold"><div class="th t-i">☪️<small style="display:block;margin-top:4px;font-size:22px">ISLAMI</small></div><div class="inf"><h3>Islami Gold</h3><p>Hijau Masjid</p></div></div>
+<div class="card" data-theme="Floral Rustic"><div class="th t-f">🌸<small style="font-size:22px;color:#880E4F">FLORAL</small></div><div class="inf"><h3>Floral Rustic</h3><p>Bunga Kayu</p></div></div>
+<div class="card" data-theme="Adat Sunda"><div class="th t-s">👑<small>SIGER • SUNDA</small></div><div class="inf"><h3>Adat Sunda</h3><p>Merah Gold</p></div></div>
+<div class="card" data-theme="Black Luxury"><div class="th t-l">💎<small>LUXURY</small></div><div class="inf"><h3>Black Luxury</h3><p>Hitam Gold Mewah</p></div></div>
+</div>
+<div class="panel"><h2>1. <span>Tampilan Awal</span> & Pengantin</h2>
+<label>Tampilan Awal Cover</label><select id="coverFirst"><option value="pria">Pria dulu di atas (Andi & Wulan)</option><option value="wanita">Wanita dulu di atas (Wulan & Andi)</option><option value="bersama">Bersama</option></select>
+<div class="row2"><div><label>Foto Pengantin Pria (bulat aesthetic)</label><input id="fotoPria" type="file" accept="image/*"><label>Nama Pria</label><input id="pria" value="Andi Saputra"><label>Anak dari:</label><input id="ortuPria" value="Putra dari Bapak Sujono & Ibu Siti Aminah"><label>IG Pria</label><input id="igPria" placeholder="@andisaputra"></div>
+<div><label>Foto Pengantin Wanita (bulat aesthetic)</label><input id="fotoWanita" type="file" accept="image/*"><label>Nama Wanita</label><input id="wanita" value="Wulan Lestari"><label>Anak dari:</label><input id="ortuWanita" value="Putri dari Bapak Hartono & Ibu Wati"><label>IG Wanita</label><input id="igWanita" placeholder="@wulanlestari"></div></div>
+<label>Musik Pengiring (otomatis play)</label><select id="musik"><option value="">Tanpa Musik</option><option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">Janji Suci - Yovie (Demo)</option><option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">A Thousand Years (Demo)</option><option value="sholawat">Sholawat Jibril (Teks)</option></select>
+</div>
+<div class="panel"><h2>2. <span>Acara, Lokasi & Live</span></h2>
+<div class="row2"><div><label>Tanggal Akad</label><input id="tglAkad" type="date"><label>Jam Akad</label><input id="jamAkad" type="time" value="08:00"></div><div><label>Tanggal Resepsi</label><input id="tglResepsi" type="date"><label>Jam Resepsi</label><input id="jamResepsi" type="time" value="11:00"></div></div>
+<label>Lokasi & Gedung</label><input id="lokasi" value="Masjid Istiqlal & Gedung Sasono Langen Budoyo, Jakarta">
+<label>Link Google Maps</label><input id="maps" placeholder="https://maps.google.com/...">
+<label>Link Live Streaming (YouTube Live / Zoom)</label><input id="live" placeholder="https://www.youtube.com/live/xxxxx">
+</div>
+<div class="panel"><h2>3. <span>Momen Perkenalan</span> - Love Story</h2>
+<label>Story 1</label><input id="story1T" value="Awal Bertemu - 2022"><textarea id="story1D">Berawal dari teman kampus, kami dipertemukan di acara UKM.</textarea>
+<label>Story 2</label><input id="story2T" value="Komitmen Serius - 2024"><textarea id="story2D">Setelah 2 tahun, kami memutuskan serius dan lamaran.</textarea>
+<label>Story 3</label><input id="story3T" value="Menuju Halal - 2026"><textarea id="story3D">Dengan restu keluarga, kami memantapkan hati untuk menikah.</textarea>
+</div>
+<div class="panel"><h2>4. <span>Foto & Video YouTube Akad</span></h2>
+<div class="row2"><input id="galeri1" type="file" accept="image/*"><input id="galeri2" type="file" accept="image/*"></div>
+<label>Link Video YouTube Momen Akad</label><input id="youtube" placeholder="https://www.youtube.com/watch?v=xxxxx">
+</div>
+<div class="panel"><h2>5. <span>Turut Mengundang & Hadiah Lengkap</span></h2>
+<label>Turut Mengundang (pisahkan koma)</label><textarea id="turut" rows="2">Keluarga Besar Bapak Sujono, Keluarga Besar Bapak Hartono, Teman-teman UKM Kampus</textarea>
+<div class="row2"><div><label>Rekening 1 (Bank)</label><input id="bank1" value="BCA - 1234567890 a.n Andi Saputra"><label>Rekening 2 (Bank)</label><input id="bank2" value="Mandiri - 9876543210 a.n Wulan Lestari"></div><div><label>E-Wallet 1</label><input id="ewallet1" value="DANA - 08123456789 a.n Andi"><label>E-Wallet 2</label><input id="ewallet2" value="GoPay - 08123456789 a.n Wulan"></div></div>
+<label>QRIS / Saweria Link</label><input id="qris" placeholder="https://saweria.co/...">
+</div>
+<button class="btn btn-gold" onclick="generateV6()" style="font-size:15px">✨ GENERATE V6 PRO MAX - LINK PREMIUM</button>
+<div class="prevBox" id="resultV6"></div>
+</div></div><div id="invView">
+<div class="cover" id="coverSec"><div class="badge" id="badgeT">THE WEDDING OF</div><h1 id="cNama">Andi & Wulan</h1><p id="cTgl" style="margin-top:8px;color:#777"></p><p id="cLok" style="font-size:12px;color:#999;margin-top:6px"></p><div class="countdown" id="countdown" style="max-width:320px;margin:18px auto 0"><div class="cd-box"><b id="cdD">00</b><span>HARI</span></div><div class="cd-box"><b id="cdH">00</b><span>JAM</span></div><div class="cd-box"><b id="cdM">00</b><span>MENIT</span></div><div class="cd-box"><b id="cdS">00</b><span>DETIK</span></div></div><div style="margin-top:20px;position:relative;z-index:1"><p style="font-size:10px;color:#aaa">Kepada Yth</p><h3 id="cTamu" style="font-family:'Playfair Display';font-size:20px">Tamu Undangan</h3></div><button class="btn" style="width:auto;padding:12px 28px;margin-top:20px;position:relative;z-index:1" onclick="document.getElementById('detailSec').scrollIntoView({behavior:'smooth'});playMusic()">💌 Buka Undangan</button></div>
+<div class="section" id="detailSec"><h2>Assalamualaikum <em>Wr. Wb</em></h2><p style="color:#777;font-size:12px;margin-top:8px">Dengan memohon rahmat & ridho Allah SWT, kami mengundang Bapak/Ibu untuk hadir di pernikahan kami:</p>
+<div class="coupleCard"><img id="vFotoPria" src=""><div><h3 id="vPria">Andi Saputra</h3><p class="anak" id="vOrtuPria"></p><p class="ig" id="vIgPria"></p></div></div>
+<div class="coupleCard"><img id="vFotoWanita" src=""><div><h3 id="vWanita">Wulan Lestari</h3><p class="anak" id="vOrtuWanita"></p><p class="ig" id="vIgWanita"></p></div></div>
+<div style="margin-top:30px"><h2>Save <em>The Date</em></h2><div class="row2"><div class="panel" style="margin-top:8px"><h3 style="font-size:13px">🤍 Akad Nikah</h3><p id="vAkad" style="font-size:11px;color:#666;margin-top:6px"></p></div><div class="panel" style="margin-top:8px"><h3 style="font-size:13px">💍 Resepsi</h3><p id="vResepsi" style="font-size:11px;color:#666;margin-top:6px"></p></div></div><a id="vMaps" target="_blank" class="btn btn-gold" style="display:inline-block;width:auto;text-decoration:none;margin-top:12px">📍 Buka Google Maps</a><a id="vLive" target="_blank" class="btn" style="display:inline-block;width:auto;text-decoration:none;margin-top:8px;background:#FF0000">🔴 Live Streaming Akad</a></div>
+<div style="margin-top:30px"><h2>Momen <em>Perkenalan Kami</em></h2><div class="timeline"><div class="item"><h4 id="vS1T"></h4><p id="vS1D"></p></div><div class="item"><h4 id="vS2T"></h4><p id="vS2D"></p></div><div class="item"><h4 id="vS3T"></h4><p id="vS3D"></p></div></div></div>
+<div style="margin-top:30px" id="galeriSec"><h2>Galeri <em>Foto</em></h2><div class="photoGrid"><img id="vGal1"><img id="vGal2"></div></div>
+<div style="margin-top:30px" id="videoSec"><h2>Video <em>Momen Akad</em></h2><div class="videoWrap"><iframe id="vYoutube" frameborder="0" allowfullscreen></iframe></div></div>
+<div style="margin-top:30px"><h2>Turut <em>Mengundang</em></h2><p id="vTurut" style="font-size:12px;color:#666;line-height:1.8;margin-top:10px"></p></div>
+<div style="margin-top:30px"><h2>Hadiah <em>Pernikahan</em></h2><p style="font-size:11px;color:#888;margin-top:6px">Doa restu Anda adalah hadiah terindah, namun jika berkenan memberi hadiah:</p><div class="giftBox"><div>💳 2 Rekening Bank</div><div class="rek"><div><b id="vBank1"></b></div><button class="copy" onclick="copyText('vBank1')">Copy</button></div><div class="rek"><div><b id="vBank2"></b></div><button class="copy" onclick="copyText('vBank2')">Copy</button></div><div style="margin-top:14px">📱 E-Wallet</div><div class="rek"><div><b id="vE1"></b></div><button class="copy" onclick="copyText('vE1')">Copy</button></div><div class="rek"><div><b id="vE2"></b></div><button class="copy" onclick="copyText('vE2')">Copy</button></div><div id="vQrisWrap" style="margin-top:12px;font-size:11px;color:#C5A572;word-break:break-all"></div></div></div>
+<div style="margin-top:32px;padding:22px;background:linear-gradient(135deg,#FFFBF5,#FFF8EE);border-radius:18px;border:1px solid #F5EDE0"><h3>Konfirmasi Kehadiran</h3><p style="font-size:11px;color:#999;margin:6px 0">Mohon konfirmasi kehadiran</p><a id="vRsvp" class="btn" style="background:#25D366;text-decoration:none;display:block;text-align:center">💬 Konfirmasi via WhatsApp</a></div>
+<div style="text-align:center;padding:32px;color:#aaa;font-size:10px">Dibuat dengan ❤️ via NIKAHGAN ID V6 PRO MAX<br>nikahgan-id.vercel.app • Premium 199rb</div>
+</div>
+<div class="musicBtn" id="musicBtn" onclick="toggleMusic()" style="display:none">🎵</div>
+<audio id="audioPlayer" loop></audio>
+</div>
+<script>
+let theme='Modern Minimalis'; document.querySelectorAll('.card').forEach(c=>{c.onclick=()=>{document.querySelectorAll('.card').forEach(x=>x.classList.remove('active'));c.classList.add('active');theme=c.dataset.theme}});
+let store={fotoPria:'',fotoWanita:'',gal1:'',gal2:''};
+function readFile(id,key){const inp=document.getElementById(id);if(inp.files[0]){const r=new FileReader();r.onload=e=>{store[key]=e.target.result};r.readAsDataURL(inp.files[0]);}}
+document.getElementById('fotoPria').onchange=()=>readFile('fotoPria','fotoPria'); document.getElementById('fotoWanita').onchange=()=>readFile('fotoWanita','fotoWanita'); document.getElementById('galeri1').onchange=()=>readFile('galeri1','gal1'); document.getElementById('galeri2').onchange=()=>readFile('galeri2','gal2');
+function ytId(url){try{if(!url)return '';let id='';if(url.includes('youtu.be/')){id=url.split('youtu.be/')[1].split(/[?&]/)[0]}else if(url.includes('v=')){id=url.split('v=')[1].split('&')[0]}else if(url.includes('embed/')){id=url.split('embed/')[1].split(/[?&]/)[0]}else{id=url}return id}catch(e){return ''}}
+const q=new URLSearchParams(location.search); if(q.get('pria')){showV6();}
+function generateV6(){
+ const data={pria:document.getElementById('pria').value,wanita:document.getElementById('wanita').value,ortuPria:document.getElementById('ortuPria').value,ortuWanita:document.getElementById('ortuWanita').value,igPria:document.getElementById('igPria').value,igWanita:document.getElementById('igWanita').value,tglAkad:document.getElementById('tglAkad').value||'2026-12-28',jamAkad:document.getElementById('jamAkad').value,tglResepsi:document.getElementById('tglResepsi').value||document.getElementById('tglAkad').value||'2026-12-28',jamResepsi:document.getElementById('jamResepsi').value,lokasi:document.getElementById('lokasi').value,maps:document.getElementById('maps').value,live:document.getElementById('live').value,s1t:document.getElementById('story1T').value,s1d:document.getElementById('story1D').value,s2t:document.getElementById('story2T').value,s2d:document.getElementById('story2D').value,s3t:document.getElementById('story3T').value,s3d:document.getElementById('story3D').value,turut:document.getElementById('turut').value,bank1:document.getElementById('bank1').value,bank2:document.getElementById('bank2').value,e1:document.getElementById('ewallet1').value,e2:document.getElementById('ewallet2').value,qris:document.getElementById('qris').value,youtube:document.getElementById('youtube').value,coverFirst:document.getElementById('coverFirst').value,tema:theme,musik:document.getElementById('musik').value};
+ localStorage.setItem('nikahgan_v6_images', JSON.stringify(store));
+ const base=location.origin+location.pathname; const params=new URLSearchParams(); for(let k in data){params.set(k,data[k])} params.set('to','NamaTamu');
+ const link=base+'?'+params.toString();
+ document.getElementById('resultV6').style.display='block';
+ document.getElementById('resultV6').innerHTML=`✅ <b>V6 PRO MAX JADI! 💎</b><br><small>Tema: ${theme} • ${data.coverFirst}</small><div style="background:#111;color:#fff;padding:12px;border-radius:12px;margin:12px 0">${link}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><a href="${link}" target="_blank" class="btn" style="text-align:center;text-decoration:none">👁️ Preview Premium</a><a href="https://wa.me/?text=${encodeURIComponent('Undangan Nikah '+data.pria+' & '+data.wanita+'\n'+link)}" target="_blank" class="btn" style="text-align:center;text-decoration:none;background:#25D366">WA Share</a></div>`;
+}
+function showV6(){
+ document.getElementById('builderView').style.display='none'; document.getElementById('invView').style.display='block';
+ const pria=q.get('pria')||'Andi'; const wanita=q.get('wanita')||'Wulan'; const coverFirst=q.get('coverFirst')||'pria'; let displayName=''; if(coverFirst==='pria'){displayName=pria+' & '+wanita}else if(coverFirst==='wanita'){displayName=wanita+' & '+pria}else{displayName=pria+' & '+wanita}
+ document.getElementById('cNama').innerText=displayName; document.getElementById('badgeT').innerText=(q.get('tema')||'The Wedding Of').toUpperCase();
+ const tglAc=q.get('tglAkad')||q.get('tglResepsi')||'2026-12-28'; document.getElementById('cTgl').innerText=new Date(tglAc).toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); document.getElementById('cLok').innerText=q.get('lokasi')||''; document.getElementById('cTamu').innerText=q.get('to')||'Tamu Undangan';
+ document.getElementById('vPria').innerText=pria; document.getElementById('vWanita').innerText=wanita; document.getElementById('vOrtuPria').innerText=q.get('ortuPria')||''; document.getElementById('vOrtuWanita').innerText=q.get('ortuWanita')||''; document.getElementById('vIgPria').innerText=q.get('igPria')||''; document.getElementById('vIgWanita').innerText=q.get('igWanita')||'';
+ document.getElementById('vAkad').innerText=(q.get('tglAkad')||'')+' • '+(q.get('jamAkad')||'')+' WIB - Akad'; document.getElementById('vResepsi').innerText=(q.get('tglResepsi')||'')+' • '+(q.get('jamResepsi')||'')+' WIB - Resepsi';
+ document.getElementById('vMaps').href=q.get('maps')||'https://maps.google.com'; const liveLink=q.get('live')||''; if(liveLink){document.getElementById('vLive').href=liveLink}else{document.getElementById('vLive').style.display='none'}
+ document.getElementById('vS1T').innerText=q.get('s1t')||''; document.getElementById('vS1D').innerText=q.get('s1d')||''; document.getElementById('vS2T').innerText=q.get('s2t')||''; document.getElementById('vS2D').innerText=q.get('s2d')||''; document.getElementById('vS3T').innerText=q.get('s3t')||''; document.getElementById('vS3D').innerText=q.get('s3d')||'';
+ document.getElementById('vTurut').innerText=q.get('turut')||''; document.getElementById('vBank1').innerText=q.get('bank1')||''; document.getElementById('vBank2').innerText=q.get('bank2')||''; document.getElementById('vE1').innerText=q.get('e1')||''; document.getElementById('vE2').innerText=q.get('e2')||'';
+ document.getElementById('vQrisWrap').innerText=q.get('qris')?('QRIS: '+q.get('qris')):'';
+ const yt=q.get('youtube')||''; const id=ytId(yt); if(id){document.getElementById('vYoutube').src='https://www.youtube.com/embed/'+id}else{document.getElementById('videoSec').style.display='none'}
+ try{const imgs=JSON.parse(localStorage.getItem('nikahgan_v6_images')||'{}'); if(imgs.fotoPria)document.getElementById('vFotoPria').src=imgs.fotoPria; if(imgs.fotoWanita)document.getElementById('vFotoWanita').src=imgs.fotoWanita; if(imgs.gal1)document.getElementById('vGal1').src=imgs.gal1; if(imgs.gal2)document.getElementById('vGal2').src=imgs.gal2;}catch(e){}
+ document.getElementById('vRsvp').href=`https://wa.me/?text=${encodeURIComponent('Halo '+pria+' & '+wanita+', saya '+ (q.get('to')||'') +' konfirmasi hadir ❤️')}`;
+ const musik=q.get('musik')||''; if(musik && musik!=='sholawat'){document.getElementById('audioPlayer').src=musik; document.getElementById('musicBtn').style.display='flex';}
+ const target=new Date(tglAc).getTime(); setInterval(()=>{const now=Date.now();const diff=target-now;if(diff>0){document.getElementById('cdD').innerText=Math.floor(diff/86400000);document.getElementById('cdH').innerText=Math.floor(diff%86400000/3600000);document.getElementById('cdM').innerText=Math.floor(diff%3600000/60000);document.getElementById('cdS').innerText=Math.floor(diff%60000/1000)}},1000);
+}
+let playing=false; function playMusic(){const a=document.getElementById('audioPlayer');if(a.src){a.play().catch(()=>{});playing=true;}}
+function toggleMusic(){const a=document.getElementById('audioPlayer');if(!a.src)return;if(playing){a.pause();playing=false;document.getElementById('musicBtn').innerText='🔇'}else{a.play();playing=true;document.getElementById('musicBtn').innerText='🎵'}}
+function copyText(id){const t=document.getElementById(id).innerText; navigator.clipboard.writeText(t); alert('✅ Copied: '+t)}
+</script></body></html>
