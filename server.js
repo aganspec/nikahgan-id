@@ -62,11 +62,9 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// // 2. ROUTING UTAMA: Mengtangkap URL slug dinamis beserta parameter nama tamu
+// 2. ROUTING UTAMA: Menangkap URL slug dinamis beserta parameter nama tamu
 app.get('/:slug', async (req, res) => {
     const currentSlug = req.params.slug;
-
-    // Menangkap nama tamu dari parameter URL ?to=NamaTamu (jika tidak ada, kosongkan)
     const guestName = req.query.to || "";
 
     try {
@@ -82,8 +80,7 @@ app.get('/:slug', async (req, res) => {
             return res.status(404).send('<h1>Maaf, halaman undangan nikahgan.id tidak ditemukan.</h1>');
         }
 
-        
-        // --- SOLUSI MUTAKHIR: TANPA MEMBACA FILE FISIK AGAR VERCEL TIDAK CRASH ---
+        // --- HTML TEMPLATE DI DALAM MEMORI (SUDAH BERSIH TANPA BACKSLASH) ---
         let htmlContent = `
         <!DOCTYPE html>
         <html lang="id">
@@ -95,17 +92,16 @@ app.get('/:slug', async (req, res) => {
                 body { font-family: 'Arial', sans-serif; background-color: #fcf8f2; color: #4a4a4a; text-align: center; padding: 50px 20px; }
                 .card { background: white; max-width: 500px; margin: 0 auto; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eaeaea; }
                 h1 { color: #b8926a; font-size: 2.5em; margin-bottom: 10px; }
-                h2 { color: #5a5a5a; font-size: 1.5em; font-weight: normal; }
                 .guest { margin-top: 30px; font-style: italic; background: #fdfaf6; padding: 15px; border-radius: 10px; display: inline-block; border: 1px dashed #d1b89d; }
             </style>
         </head>
         <body>
             <div class="card">
                 <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan...</p>
-                <h1>\${weddingData.name}</h1>
+                <h1>${weddingData.name}</h1>
                 <p>Akan melangsungkan acara pernikahan mereka.</p>
                 
-                \${guestName ? \`<div class="guest"><p>Kepada Yth. Bapak/Ibu/Saudara/i:</p><h3>\${guestName}</h3></div>\` : ''}
+                ${guestName ? `<div class="guest"><p>Kepada Yth. Bapak/Ibu/Saudara/i:</p><h3>\${guestName}</h3></div>` : ''}
                 
                 <p style="margin-top: 40px; font-size: 0.9em; color: #a1a1a1;">Dibuat otomatis oleh Nikahgan.id</p>
             </div>
@@ -114,12 +110,13 @@ app.get('/:slug', async (req, res) => {
         `;
 
         return res.send(htmlContent);
-    
 
     } catch (err) {
-        return res.status(500).send('Server Error');
+        // Blok catch anti-crash: jika ada eror data, server tidak akan mati, melainkan memunculkan teks erornya
+        return res.status(500).send(`<h1>Terjadi Kesalahan Server: ${err.message}</h1>`);
     }
 });
+
 
 // Menjalankan server lokal
 app.listen(PORT, () => {
