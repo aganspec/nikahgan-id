@@ -23,9 +23,12 @@ const database = {
     rsvps: [] // Menampung ucapan masuk secara real-time
 };
 
-// 1. ROUTING UTAMA: Menangkap URL slug dinamis (Contoh: nikahgan.id/budi-ani)
+// 1. ROUTING UTAMA: Menangkap URL slug dinamis beserta parameter nama tamu (?to=...)
 app.get('/:slug', (req, res) => {
     const currentSlug = req.params.slug;
+    
+    // Menangkap nama tamu dari parameter URL ?to=NamaTamu (jika tidak ada, kosongkan)
+    const guestName = req.query.to || ''; 
     
     // Cari data pengantin berdasarkan slug di URL
     const weddingData = database.weddings.find(w => w.slug === currentSlug);
@@ -38,19 +41,20 @@ app.get('/:slug', (req, res) => {
     // Ambil daftar ucapan khusus untuk ID pernikahan ini
     const currentRsvps = database.rsvps.filter(r => r.wedding_id === weddingData.id);
 
-    // Baca file template utama undangan.html yang akan dibuat setelah ini
+    // Baca file template utama undangan.html
     const templatePath = path.join(__dirname, 'views', 'undangan.html');
     
     try {
         let htmlContent = fs.readFileSync(templatePath, 'utf8');
 
-        // Ganti placeholder di HTML dengan data riil dari database
+        // Ganti placeholder di HTML dengan data riil dari database dan parameter URL
         htmlContent = htmlContent
             .replace(/{{MEMPELAI_PRIA}}/g, weddingData.groom)
             .replace(/{{MEMPELAI_WANITA}}/g, weddingData.bride)
             .replace(/{{TANGGAL_PERNIKAHAN}}/g, weddingData.date)
             .replace(/{{MAPS_URL}}/g, weddingData.maps_url)
             .replace(/{{WEDDING_ID}}/g, weddingData.id)
+            .replace(/{{NAMA_TAMU_OTOMATIS}}/g, guestName) // Memasukkan nama tamu otomatis ke form
             .replace(/{{DAFTAR_UCAPAN}}/g, currentRsvps.map(r => `<li><b>${r.name}</b> (${r.status}): <br> "${r.message}"</li>`).join(''));
 
         // Kirim halaman web yang sudah dinamis ke browser tamu
