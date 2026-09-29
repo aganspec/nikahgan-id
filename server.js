@@ -9,7 +9,9 @@ const PORT = process.env.PORT || 3000;
 // Inisialisasi Supabase menggunakan Environment Variables dari Vercel
 // Kode ini otomatis membersihkan spasi atau tanda garis miring (/) di akhir URL
 const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
-const supabaseUrl = rawUrl.replace(/\/\$/, '').trim(); 
+const supabaseUrl = rawUrl.replace(/\/$/, '').trim();
+
+
 
 const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
 const supabaseKey = rawKey.trim();
