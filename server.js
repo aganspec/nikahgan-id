@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// 🛠️ DATA SIMULASI (Bisa dihubungkan ke Database nantinya)
+// // DATA SIMULASI (Bisa dihubungkan ke Database nantinya)
 const database = {
     weddings: [
         {
@@ -23,13 +23,36 @@ const database = {
     rsvps: [] // Menampung ucapan masuk secara real-time
 };
 
-// 1. ROUTING UTAMA: Menangkap URL slug dinamis beserta parameter nama tamu (?to=...)
+// =========================================================================
+// 1. ROUTING REGISTER: Menangani Pendaftaran Akun Pengantin Baru
+// =========================================================================
+app.post('/register', (req, res) => {
+    const { nama, email, whatsapp, password } = req.body;
+
+    // Validasi sederhana untuk memastikan data terisi semua
+    if (!nama || !email || !whatsapp || !password) {
+        return res.status(400).json({ success: false, message: "Semua kolom pendaftaran wajib diisi!" });
+    }
+
+    // SIMULASI: Menyimpan akun pengantin baru (Nanti bisa dihubungkan ke tabel Supabase Anda)
+    console.log("Menerima pendaftaran akun baru:", { nama, email, whatsapp });
+
+    // Kirim respons sukses ke halaman utama agar browser bisa mengalihkan halaman
+    return res.status(200).json({ 
+        success: true, 
+        message: "Pendaftaran akun berhasil! Selamat datang di Nikahgan.id." 
+    });
+});
+
+// =========================================================================
+// 2. ROUTING UTAMA: Menangkap URL slug dinamis beserta parameter nama tamu
+// =========================================================================
 app.get('/:slug', (req, res) => {
     const currentSlug = req.params.slug;
-    
+
     // Menangkap nama tamu dari parameter URL ?to=NamaTamu (jika tidak ada, kosongkan)
-    const guestName = req.query.to || ''; 
-    
+    const guestName = req.query.to || '';
+
     // Cari data pengantin berdasarkan slug di URL
     const weddingData = database.weddings.find(w => w.slug === currentSlug);
 
@@ -42,8 +65,8 @@ app.get('/:slug', (req, res) => {
     const currentRsvps = database.rsvps.filter(r => r.wedding_id === weddingData.id);
 
     // Baca file template utama undangan.html
-    const templatePath = path.join(__dirname, 'views', 'undangan.html');
-    
+    const templatePath = path.join(__dirname, 'views', 'Undangan.html');
+
     try {
         let htmlContent = fs.readFileSync(templatePath, 'utf8');
 
@@ -64,10 +87,12 @@ app.get('/:slug', (req, res) => {
     }
 });
 
-// 2. ROUTING RSVP: Menerima kiriman form ucapan dari tamu
+// =========================================================================
+// 3. ROUTING RSVP: Menerima kiriman form ucapan dari tamu
+// =========================================================================
 app.post('/api/rsvp', (req, res) => {
     const { wedding_id, name, status, message } = req.body;
-    
+
     // Simpan data ucapan masuk
     database.rsvps.push({
         wedding_id: parseInt(wedding_id),
@@ -79,25 +104,6 @@ app.post('/api/rsvp', (req, res) => {
     // Cari kembali data slug agar halaman otomatis ter-refresh dengan ucapan baru
     const wedding = database.weddings.find(w => w.id === parseInt(wedding_id));
     res.redirect(`/${wedding.slug}`);
-});
-// 3. ROUTING REGISTER: Menangani Pendaftaran Akun Pengantin Baru
-app.post('/register', (req, res) => {
-    
-    const { nama, email, whatsapp, password } = req.body;
-
-    // Validasi sederhana untuk memastikan data terisi semua
-    if (!nama || !email || !whatsapp || !password) {
-        return res.status(400).json({ success: false, message: "Semua kolom pendaftaran wajib diisi!" });
-    }
-
-    // SIMULASI: Menyimpan akun pengantin baru (Nanti bisa dihubungkan ke tabel Supabase Anda)
-    console.log("Menerima pendaftaran akun baru:", { nama, email, whatsapp });
-
-    // Kirim respons sukses ke halaman utama agar browser bisa mengalihkan halaman
-    return res.status(200).json({ 
-        success: true, 
-        message: "Pendaftaran akun berhasil! Selamat datang di Nikahgan.id." 
-    });
 });
 
 app.listen(PORT, () => {
