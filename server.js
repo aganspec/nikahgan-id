@@ -82,12 +82,13 @@ app.get('/:slug', async (req, res) => {
             return res.status(404).send('<h1>Maaf, halaman undangan nikahgan.id tidak ditemukan.</h1>');
         }
 
-        // Baca file template utama undangan.html
-        const templatePath = path.join(__dirname, 'views', 'Undangan.html');
         
-        if (!fs.existsSync(templatePath)) {
-            return res.status(500).send('<h1>Error: File template Undangan.html tidak ditemukan di folder views.</h1>');
-        }
+// KODE PERBAIKAN (Gantikan ke Baris 85-90):
+const templatePath = path.join(__dirname, 'views', 'undangan.html');
+
+if (!fs.existsSync(templatePath)) {
+    return res.status(500).send('<h1>Error: File template undangan.html tidak ditemukan di folder views.</h1>');
+}
 
         let htmlContent = fs.readFileSync(templatePath, 'utf8');
 
