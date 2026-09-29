@@ -3,150 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Pengantin - Nikahgan.id</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://jsdelivr.net"></script>
-    <!-- Google Fonts & FontAwesome -->
-    <link href="https://googleapis.com" rel="stylesheet">
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <title>Dashboard Pengantin - nikahgan.id</title>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h1, h2 { color: #b38b6d; font-family: 'Georgia', serif; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .btn { background-color: #b38b6d; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn:hover { background-color: #987255; }
+        .tamu-list { margin-top: 30px; border-collapse: collapse; width: 100%; }
+        .tamu-list th, .tamu-list td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .tamu-list th { background-color: #fdfbf7; color: #b38b6d; }
+        .btn-wa { background-color: #25D366; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-size: 12px; font-weight: bold; display: inline-block; }
+        .btn-wa:hover { background-color: #128C7E; }
+        .hint { font-size: 12px; color: #666; margin-top: 5px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col md:flex-row">
+<body>
 
-    <!-- 1. SIDEBAR NAVIGATION -->
-    <aside class="w-full md:w-64 bg-slate-900 text-slate-300 flex flex-col justify-between p-6">
-        <div>
-            <div class="mb-8">
-                <span class="text-xl font-black text-white tracking-tight">nikahgan<span class="text-rose-500">.id</span></span>
-                <p class="text-xs text-slate-500 mt-1">Panel Kontrol Pengantin</p>
-            </div>
-            <nav class="space-y-2">
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-rose-600 text-white font-semibold transition">
-                    <i class="fa-solid fa-gauge w-5"></i> Dasbor Utama
-                </a>
-                <a href="#tamu" onclick="alert('Fitur Daftar Tamu segera hadir di langkah berikutnya!')" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition text-sm">
-                    <i class="fa-solid fa-users w-5"></i> Daftar Tamu & RSVP
-                </a>
-            </nav>
-        </div>
-        <div class="pt-6 border-t border-slate-800">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-9 h-9 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-sm" id="user-initial">P</div>
-                <div class="truncate">
-                    <p class="text-sm font-bold text-white truncate" id="user-nama">Pengantin</p>
-                    <span class="text-xs text-emerald-400 flex items-center gap-1">● Akun Aktif</span>
-                </div>
-            </div>
-            <button onclick="logout()" class="w-full py-2.5 px-4 bg-slate-800 hover:bg-rose-950 hover:text-rose-400 text-slate-400 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2">
-                <i class="fa-solid fa-right-from-bracket"></i> Keluar Sistem
-            </button>
-        </div>
-    </aside>
+<div class="container">
+    <h1>Dashboard Manajemen Tamu</h1>
+    <p>Selamat datang di panel kontrol undangan Anda. Atur daftar tamu dan sebar undangan dengan mudah di sini.</p>
+    
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
-    <!-- 2. MAIN CONTENT AREA -->
-    <main class="flex-grow p-4 sm:p-8 lg:p-12 overflow-y-auto">
-        <header class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div>
-                <h1 class="text-2xl font-serif font-bold text-slate-900">Kelola Informasi Pernikahan</h1>
-                <p class="text-sm text-slate-500">Isi data di bawah ini untuk memperbarui isi website undangan digital Anda secara instan.</p>
-            </div>
-        </header>
+    <!-- Form Input Tamu Baru -->
+    <h2>1. Tambah Tamu Undangan</h2>
+    <div class="form-group">
+        <label for="guestName">Nama Tamu / Kelompok</label>
+        <input type="text" id="guestName" placeholder="Contoh: Andi Saputra, S.Kom / Keluarga Besar Bpk. Jono">
+    </div>
+    <div class="form-group">
+        <label for="guestPhone">Nomor WhatsApp Tamu</label>
+        <input type="tel" id="guestPhone" placeholder="Contoh: 081234567890 atau 6281234567890">
+        <p class="hint">Pastikan menggunakan kode negara (62) atau angka 0 di depan.</p>
+    </div>
+    <button class="btn" onclick="tambahTamu()">Tambah ke Daftar</button>
 
-        <!-- FORM INPUT UTAMA DATA PERNIKAHAN -->
-        <form id="form-undangan" class="space-y-8 max-w-4xl">
+    <hr style="border: 0; border-top: 1px dashed #b38b6d; margin: 30px 0;">
+
+    <!-- Daftar Tamu & Generator Link -->
+    <h2>2. Daftar Tamu & Tautan Broadcast</h2>
+    <p class="hint">Teks pesan otomatis akan mengarah ke WhatsApp tamu dengan membawa tautan unik nama mereka.</p>
+    
+    <table class="tamu-list">
+        <thead>
+            <tr>
+                <th>Nama Tamu</th>
+                <th>Nomor WhatsApp</th>
+                <th>Tautan Undangan Khusus</th>
+                <th>Aksi Sebar</th>
+            </tr>
+        </thead>
+        <tbody id="tamuTableBody">
+            <!-- Data tamu akan muncul secara dinamis di sini via JavaScript -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // 🛠️ DATA SIMULASI URL SLUG (Nantinya variabel ini diambil otomatis dari database profil user)
+    const USERS_WEDDING_SLUG = "budi-ani"; 
+    const BASE_URL = "nikahgan.id"; // Domain utama platform Anda
+
+    // Array sementara untuk menampung data tamu di sisi browser
+    let daftarTamu = [
+        { nama: "Bapak Rahmad & Istri", phone: "6281234567890" },
+        { nama: "Sahabat Kuliah Dian", phone: "6289876543210" }
+    ];
+
+    // Fungsi untuk menampilkan data dari array ke dalam tabel HTML
+    function renderTamu() {
+        const tableBody = document.getElementById("tamuTableBody");
+        tableBody.innerHTML = "";
+
+        daftarTamu.forEach((tamu, index) => {
+            // Tautan unik untuk parameter ?to=NamaTamu (Spasi diubah menjadi %20 agar aman di URL)
+            const linkUndangan = `https://${BASE_URL}/${USERS_WEDDING_SLUG}?to=${encodeURIComponent(tamu.nama)}`;
             
-            <!-- BLOK 1: URL & LINK UNIK -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-link text-rose-500"></i> Pengaturan Tautan Undangan</h3>
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Custom URL Slug</label>
-                    <div class="flex rounded-xl shadow-sm border border-slate-200 overflow-hidden bg-slate-50">
-                        <span class="inline-flex items-center px-4 text-slate-400 text-sm border-r border-slate-200">nikahgan.id/</span>
-                        <input type="text" id="inv-slug" required class="w-full px-4 py-3 focus:outline-none bg-white text-sm" placeholder="budi-rara">
-                    </div>
-                    <p class="text-xs text-slate-400 mt-1">Gunakan huruf kecil, angka, atau tanda hubung saja (tanpa spasi).</p>
-                </div>
-            </div>
+            // Format draft teks pesan manis khas undangan pernikahan Indonesia
+            const teksPesan = `Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i *${tamu.nama}* untuk dapat menghadiri acara pernikahan kami.\n\nDetail informasi dan lokasi acara dapat diakses melalui tautan undangan digital berikut:\n${linkUndangan}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.\n\nTerima kasih.`;
+            
+            // Tautan API resmi WhatsApp untuk mengirim pesan instan tanpa perlu simpan nomor
+            const waApiUrl = `https://whatsapp.com{formatNomorWA(tamu.phone)}&text=${encodeURIComponent(teksPesan)}`;
 
-            <!-- BLOK 2: DATA MEMPELAI -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm grid sm:grid-cols-2 gap-6">
-                <!-- Mempelai Pria -->
-                <div class="space-y-4">
-                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-mars text-blue-500"></i> Mempelai Pria</h3>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Lengkap Pria</label>
-                        <input type="text" id="inv-pria-lengkap" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Budi Darmawan">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Panggilan Pria</label>
-                        <input type="text" id="inv-pria-panggilan" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Budi">
-                    </div>
-                </div>
+            const row = `
+                <tr>
+                    <td><b>${tamu.nama}</b></td>
+                    <td>${tamu.phone}</td>
+                    <td><small style="color: #0066cc;">${BASE_URL}/${USERS_WEDDING_SLUG}?to=...</small></td>
+                    <td>
+                        <a href="${waApiUrl}" target="_blank" class="btn-wa">Kirim via WA</a>
+                    </td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    }
 
-                <!-- Mempelai Wanita -->
-                <div class="space-y-4">
-                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-venus text-pink-500"></i> Mempelai Wanita</h3>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Lengkap Wanita</label>
-                        <input type="text" id="inv-wanita-lengkap" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Rara Lestari">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nama Panggilan Wanita</label>
-                        <input type="text" id="inv-wanita-panggilan" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Rara">
-                    </div>
-                </div>
-            </div>
+    // Fungsi untuk memastikan format nomor HP kompatibel dengan API WhatsApp (mengubah 08... menjadi 628...)
+    function formatNomorWA(phone) {
+        let cleanPhone = phone.replace(/[^0-9]/g, ''); // bersihkan karakter non-angka
+        if (cleanPhone.startsWith('0')) {
+            cleanPhone = '62' + cleanPhone.slice(1);
+        }
+        return cleanPhone;
+    }
 
-            <!-- BLOK 3: INFORMASI ACARA -->
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm grid sm:grid-cols-2 gap-6">
-                <!-- Info Akad -->
-                <div class="space-y-4">
-                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500"></i> Waktu & Tempat Akad</h3>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tanggal Akad</label>
-                        <input type="date" id="inv-akad-tanggal" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tempat / Gedung Akad</label>
-                        <input type="text" id="inv-akad-tempat" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Masjid Agung Al-Barkah">
-                    </div>
-                </div>
+    // Fungsi untuk menambahkan tamu baru dari form input
+    function tambahTamu() {
+        const nameInput = document.getElementById("guestName");
+        const phoneInput = document.getElementById("guestPhone");
 
-                <!-- Info Resepsi -->
-                <div class="space-y-4">
-                    <h3 class="text-md font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-champagne-glasses text-amber-500"></i> Waktu & Tempat Resepsi</h3>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tanggal Resepsi</label>
-                        <input type="date" id="inv-resepsi-tanggal" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tempat / Gedung Resepsi</label>
-                        <input type="text" id="inv-resepsi-tempat" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-rose-500 text-sm" placeholder="Contoh: Gedung Serbaguna Permata">
-                    </div>
-                </div>
-            </div>
+        if (nameInput.value.trim() === "" || phoneInput.value.trim() === "") {
+            alert("Mohon isi Nama dan Nomor WhatsApp tamu terlebih dahulu!");
+            return;
+        }
 
-            <!-- POP-UP NOTIFIKASI SIMPAN -->
-            <div id="dash-pesan" class="hidden p-4 rounded-xl text-sm font-semibold text-center"></div>
+        daftarTamu.push({
+            nama: nameInput.value.trim(),
+            phone: phoneInput.value.trim()
+        });
 
-            <!-- ACTION BUTTON -->
-            <div class="flex justify-end">
-                <button type="submit" id="btn-simpan" class="px-8 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl transition shadow-lg shadow-rose-600/20 flex items-center gap-2">
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan Data Undangan
-                </button>
-            </div>
-        </form>
-    </main>
+        // Reset form input setelah data tersimpan
+        nameInput.value = "";
+        phoneInput.value = "";
 
-    <!-- Supabase JS Library -->
-    <script src="https://jsdelivr.net"></script>
-    <script>
-        // Inisialisasi Jembatan Database Supabase
-        const supabaseUrl = 'https://supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhrYXZkb2xrY2FhZ2ltbmlhaWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1ODM3MDcsImV4cCI6MjEwNjE1OTcwN30.p3t96xEumXdpxJWbi7eAmjFWMhb2_nEYITgvro4YaTI'; 
-        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // Refresh tabel tampilan
+        renderTamu();
+    }
 
-        // Proteksi Halaman Sederhana (Cek Sesi Login di Browser)
-        const sessionData = localStorage.getItem('user_session');
+    // Jalankan render pertama kali saat halaman dimuat
+    window.onload = renderTamu;
+</script>
+
+</body>
+</html>
