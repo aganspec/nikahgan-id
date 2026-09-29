@@ -14,6 +14,20 @@ app.use(express.static(__dirname));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
+// RUTE PENERIMA PENDAFTARAN STATIS (Agar Frontend Tidak Eror JSON)
+app.post('/register', (req, res) => {
+    const { nama } = req.body;
+    
+    // Membuat nama slug otomatis dari input nama (Contoh: "Tes admin" -> "tes-admin")
+    const slug = nama ? nama.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : 'undangan';
+    
+    // Mengirimkan balasan format JSON murni yang valid agar frontend sukses membaca data
+    return res.status(200).json({
+        success: true,
+        message: "Pendaftaran sukses secara statis!",
+        slug: slug
+    });
+});
 
 // RUTE HALAMAN UNDANGAN DINAMIS (Membaca file undangan.html fisik Anda)
 app.get('/:slug', (req, res) => {
