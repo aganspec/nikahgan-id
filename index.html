@@ -3,149 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikahgan.id - Platform Undangan Digital Premium & Estetik</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://tailwindcss.com"></script>
-    <!-- Google Fonts & FontAwesome -->
-    <link href="https://googleapis.com" rel="stylesheet">
+    <title>Nikahgan.id - Platform Undangan Digital Premium</title>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .font-serif { font-family: 'Playfair Display', serif; }
+        body { font-family: sans-serif; background-color: #f8fafc; color: #334155; margin: 0; padding: 20px; }
+        .container { max-w: 400px; margin: 40px auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); border: 1px solid #e2e8f0; }
+        h2 { text-align: center; color: #0f172a; margin-bottom: 5px; }
+        p { text-align: center; font-size: 14px; color: #64748b; margin-bottom: 25px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #475569; text-transform: uppercase; }
+        input { w-index: 100%; width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; background-color: #f8fafc; font-size: 14px; }
+        input:focus { outline: none; border-color: #e11d48; background-color: white; }
+        button { width: 100%; background-color: #e11d48; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #be123c; }
+        button:disabled { background-color: #fda4af; cursor: not-allowed; }
+        #error-message { color: #b91c1c; background-color: #fef2f2; padding: 10px; border-radius: 8px; font-size: 14px; text-align: center; margin-bottom: 15px; border: 1px solid #fee2e2; }
+        .hidden { display: none; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-rose-500 selection:text-white">
+<body>
 
-    <!-- 1. NAVIGATION BAR -->
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl font-black text-rose-600 tracking-tight">nikahgan<span class="text-slate-400">.id</span></span>
-                </div>
-                <div class="hidden md:flex items-center gap-8 font-medium text-slate-600">
-                    <a href="#fitur" class="hover:text-rose-600 transition">Fitur</a>
-                    <a href="#harga" class="hover:text-rose-600 transition">Harga</a>
-                </div>
-                <div class="flex items-center gap-4">
-                    <a href="#register-section" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-full text-sm font-semibold transition">Daftar</a>
-                </div>
+    <div class="container">
+        <h2>Daftar Akun Pengantin</h2>
+        <p>Mulai langkah awal untuk membuat undangan digital Anda</p>
+
+        <form id="formRegister">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" required placeholder="Contoh: Tes Admin">
             </div>
-        </div>
-    </nav>
 
-    <!-- 2. HERO SECTION -->
-    <section class="relative py-16 lg:py-24 overflow-hidden bg-gradient-to-b from-rose-50/50 to-transparent">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-rose-100 text-rose-700 mb-6 font-semibold">
-                    ✨ #1 Platform Undangan Pernikahan Masa Kini
-                </span>
-                <h1 class="text-4xl sm:text-6xl font-serif text-slate-900 leading-tight mb-6">
-                    Undangan Pernikahan <span class="text-rose-600 italic">Digital</span> Estetik & Instan
-                </h1>
-                <p class="text-lg text-slate-600 mb-10 leading-relaxed">
-                    Bagikan momen kebahagiaan Anda ke seluruh dunia secara praktis. Lengkap dengan konfirmasi kehadiran (RSVP) otomatis, cerita cinta, galeri foto, hingga amplop digital.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                    <a href="#register-section" class="w-full sm:w-auto text-center bg-rose-600 hover:bg-rose-700 text-white px-8 py-4 rounded-xl font-medium shadow-lg shadow-rose-600/20 transition">
-                        Mulai Buat Akun
-                    </a>
-                </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="contoh@nikahgan.id">
             </div>
-        </div>
-    </section>
 
-    <!-- 3. FORM REGISTRASI -->
-    <section id="register-section" class="py-12 bg-white">
-        <div class="max-w-md mx-auto px-4">
-            <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl shadow-slate-100/70">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-serif font-bold text-slate-900 mb-2">Daftar Akun Pengantin</h2>
-                    <p class="text-sm text-slate-500">Mulai langkah awal untuk membuat undangan digital Anda</p>
-                </div>
-
-                <!-- FORM UTAMA -->
-                <form id="formRegister" class="space-y-5">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="nama">Nama Lengkap</label>
-                        <input type="text" id="nama" required placeholder="Contoh: Tes Admin" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 outline-none transition placeholder:text-slate-400">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="email">Email</label>
-                        <input type="email" id="email" required placeholder="contoh@nikahgan.id" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 outline-none transition placeholder:text-slate-400">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="whatsapp">Nomor WhatsApp</label>
-                        <input type="tel" id="whatsapp" required placeholder="Contoh: 085711167888" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 outline-none transition placeholder:text-slate-400">
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2" for="password">Password</label>
-                        <input type="password" id="password" required placeholder="••••••" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 outline-none transition placeholder:text-slate-400">
-                    </div>
-
-                    <!-- TEMPAT MENAMPILKAN PESAN ERROR -->
-                    <div id="error-message" class="text-sm text-red-600 bg-red-50 px-4 py-3 rounded-xl hidden font-medium text-center border border-red-100"></div>
-
-                    <button type="submit" id="btnSubmit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-4 rounded-xl shadow-lg shadow-rose-600/10 transition flex items-center justify-center gap-2">
-                        <span>Buat Akun Sekarang</span>
-                    </button>
-                </form>
+            <div class="form-group">
+                <label for="whatsapp">Nomor WhatsApp</label>
+                <input type="tel" id="whatsapp" required placeholder="Contoh: 085711167888">
             </div>
-        </div>
-    </section>
 
-    <!-- 4. LOGIC JAVASCRIPT KONEKSI KE BACKEND VERCEL -->
-    <script>
-        document.getElementById('formRegister').addEventListener('submit', async function(e) {
-            e.preventDefault();
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="••••••">
+            </div>
 
-            const nama = document.getElementById('nama').value;
-            const email = document.getElementById('email').value;
-            const whatsapp = document.getElementById('whatsapp').value;
-            const password = document.getElementById('password').value;
-            
-            const errorDiv = document.getElementById('error-message');
-            const btnSubmit = document.getElementById('btnSubmit');
+            <div id="error-message" class="hidden"></div>
 
-            // Reset status error
-            errorDiv.classList.add('hidden');
-            errorDiv.innerText = '';
-            btnSubmit.disabled = true;
-            btnSubmit.innerText = 'Memproses...';
+            <button type="submit" id="btnSubmit">Buat Akun Sekarang</button>
+        </form>
+    </div>
 
-            try {
-                // Menembak ke server lokal/Vercel (BUKAN langsung ke Supabase)
-                const response = await fetch('/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ nama, email, whatsapp, password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    alert(data.message);
-                    // Redirect otomatis ke halaman dashboard membawa parameter slug pernikahan
-                    window.location.href = `/dashboard.html?slug=${data.slug}`;
-                } else {
-                    // Tampilkan pesan error jika server mengirim respons gagal
-                    errorDiv.innerText = data.message || 'Pendaftaran gagal.';
-                    errorDiv.classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error('Error saat submit:', error);
-                errorDiv.innerText = 'Terjadi kesalahan jaringan atau koneksi server internal.';
-                errorDiv.classList.remove('hidden');
-            } finally {
-                btnSubmit.disabled = false;
-                btnSubmit.innerText = 'Buat Akun Sekarang';
-            }
-        });
-    </script>
+    <!-- Menghubungkan ke file logika eksternal secara aman -->
+    <script src="/script.js"></script>
 </body>
 </html>
