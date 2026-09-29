@@ -167,7 +167,8 @@ document.getElementById('form-registrasi').addEventListener('submit', async func
   
   try {
     // Panggil API Vercel/Node.js backend Anda yang terhubung ke Supabase
-    const response = await fetch('/api/register', {
+    const response = await fetch('/register', {
+
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nama, email, whatsapp, password })
