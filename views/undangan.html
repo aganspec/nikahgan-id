@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan {{MEMPELAI_PRIA}} & {{MEMPELAI_WANITA}}</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background-color: #faf7f2; color: #4a4a4a; padding: 20px; margin: 0; }
+        .container { max-width: 500px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        p.sub { font-size: 12px; letter-spacing: 2px; color: #888; font-weight: bold; }
+        h1 { font-family: 'Georgia', serif; color: #b38b6d; font-size: 28px; margin: 10px 0 25px 0; }
+        .countdown { font-size: 18px; font-weight: bold; margin: 20px 0; color: #d4a373; background: #fffcf7; padding: 15px; border-radius: 10px; border: 1px solid #f1ece4; }
+        .btn { display: block; padding: 12px; background: #b38b6d; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 15px 0; border: none; font-size: 15px; }
+        .rsvp-section { margin-top: 40px; text-align: left; background: #fdfbf7; padding: 20px; border-radius: 15px; border: 1px solid #f5efe6; }
+        .rsvp-section h3 { margin-top: 0; color: #b38b6d; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 14px; margin-bottom: 5px; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .rsvp-list { list-style: none; padding: 0; max-height: 250px; overflow-y: auto; margin-top: 15px; }
+        .rsvp-list li { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; background: white; margin-bottom: 8px; border-radius: 6px; border: 1px solid #f1ece4; }
+        .rsvp-list li b { color: #333; }
+        .badge { display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; margin-left: 5px; }
+        .badge-hadir { background: #e8f5e9; color: #2e7d32; }
+        .badge-tidak { background: #ffebee; color: #c62828; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <p class="sub">THE WEDDING OF</p>
+    <h1>{{MEMPELAI_PRIA}} & {{MEMPELAI_WANITA}}</h1>
+    
+    <!-- Timer Hitung Mundur -->
+    <div class="countdown" id="timer">Menghitung Mundur...</div>
+
+    <!-- Navigasi Peta -->
+    <a href="{{MAPS_URL}}" target="_blank" class="btn">Buka Google Maps Lokasi</a>
+
+    <!-- Area RSVP & Ucapan -->
+    <div class="rsvp-section">
+        <h3>Konfirmasi Kehadiran</h3>
+        <form action="/api/rsvp" method="POST">
+            <input type="hidden" name="wedding_id" value="{{WEDDING_ID}}">
+            
+            <div class="form-group">
+                <label>Nama Tamu</label>
+                <input type="text" name="name" required placeholder="Masukkan nama Anda">
+            </div>
+            
+            <div class="form-group">
+                <label>Konfirmasi Kehadiran</label>
+                <select name="status">
+                    <option value="Hadir">Ya, Saya Akan Hadir</option>
+                    <option value="Tidak Hadir">Maaf, Berhalangan Hadir</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Ucapan / Doa Restu</label>
+                <textarea name="message" rows="3" required placeholder="Tulis ucapan selamat Anda..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%; margin: 0; cursor: pointer;">Kirim Ucapan</button>
+        </form>
+
+        <hr style="margin: 25px 0; border: 0; border-top: 1px dashed #d4a373;">
+
+        <h3>Ucapan Doa Restu</h3>
+        <ul class="rsvp-list">
+            {{DAFTAR_UCAPAN}}
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Sistem sinkronisasi countdown dinamis
+    const weddingTarget = new Date("{{TANGGAL_PERNIKAHAN}}").getTime();
+    const timerBox = document.getElementById("timer");
+
+    const runCountdown = setInterval(() => {
+        const timeNow = new Date().getTime();
+        const timeLeft = weddingTarget - timeNow;
+
+        if (timeLeft < 0) {
+            clearInterval(runCountdown);
+            timerBox.innerHTML = "Acara Sedang / Telah Berlangsung!";
+            return;
+        }
+
+        const d = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        const h = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        
+        timerBox.innerHTML = `${d} Hari : ${h} Jam : ${m} Menit`;
+    }, 1000);
+</script>
+
+</body>
+</html>
