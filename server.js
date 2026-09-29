@@ -80,6 +80,24 @@ app.post('/api/rsvp', (req, res) => {
     const wedding = database.weddings.find(w => w.id === parseInt(wedding_id));
     res.redirect(`/${wedding.slug}`);
 });
+// 3. ROUTING REGISTER: Menangani Pendaftaran Akun Pengantin Baru
+app.post('/api/register', (req, res) => {
+    const { nama, email, whatsapp, password } = req.body;
+
+    // Validasi sederhana untuk memastikan data terisi semua
+    if (!nama || !email || !whatsapp || !password) {
+        return res.status(400).json({ success: false, message: "Semua kolom pendaftaran wajib diisi!" });
+    }
+
+    // SIMULASI: Menyimpan akun pengantin baru (Nanti bisa dihubungkan ke tabel Supabase Anda)
+    console.log("Menerima pendaftaran akun baru:", { nama, email, whatsapp });
+
+    // Kirim respons sukses ke halaman utama agar browser bisa mengalihkan halaman
+    return res.status(200).json({ 
+        success: true, 
+        message: "Pendaftaran akun berhasil! Selamat datang di Nikahgan.id." 
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Server nikahgan.id aktif di port ${PORT}`);
