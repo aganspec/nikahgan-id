@@ -83,22 +83,38 @@ app.get('/:slug', async (req, res) => {
         }
 
         
-// KODE PERBAIKAN (Gantikan ke Baris 85-90):
-const templatePath = path.join(__dirname, 'views', 'undangan.html');
+        // --- SOLUSI MUTAKHIR: TANPA MEMBACA FILE FISIK AGAR VERCEL TIDAK CRASH ---
+        let htmlContent = `
+        <!DOCTYPE html>
+        <html lang="id">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Undangan Pernikahan Online</title>
+            <style>
+                body { font-family: 'Arial', sans-serif; background-color: #fcf8f2; color: #4a4a4a; text-align: center; padding: 50px 20px; }
+                .card { background: white; max-width: 500px; margin: 0 auto; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #eaeaea; }
+                h1 { color: #b8926a; font-size: 2.5em; margin-bottom: 10px; }
+                h2 { color: #5a5a5a; font-size: 1.5em; font-weight: normal; }
+                .guest { margin-top: 30px; font-style: italic; background: #fdfaf6; padding: 15px; border-radius: 10px; display: inline-block; border: 1px dashed #d1b89d; }
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <p>Maha Suci Allah yang telah menciptakan makhluk-Nya berpasang-pasangan...</p>
+                <h1>\${weddingData.name}</h1>
+                <p>Akan melangsungkan acara pernikahan mereka.</p>
+                
+                \${guestName ? \`<div class="guest"><p>Kepada Yth. Bapak/Ibu/Saudara/i:</p><h3>\${guestName}</h3></div>\` : ''}
+                
+                <p style="margin-top: 40px; font-size: 0.9em; color: #a1a1a1;">Dibuat otomatis oleh Nikahgan.id</p>
+            </div>
+        </body>
+        </html>
+        `;
 
-if (!fs.existsSync(templatePath)) {
-    return res.status(500).send('<h1>Error: File template undangan.html tidak ditemukan di folder views.</h1>');
-}
-
-        let htmlContent = fs.readFileSync(templatePath, 'utf8');
-
-        // Mengganti placeholder teks di dalam HTML dengan data riil dari database dan URL
-        // Silakan sesuaikan teks penanda (seperti {{nama_pengantin}} atau {{nama_tamu}}) dengan isi file Undangan.html Anda
-        htmlContent = htmlContent.replace(/{{nama_pengantin}}/g, weddingData.name);
-        htmlContent = htmlContent.replace(/{{nama_tamu}}/g, guestName);
-
-        // Kirimkan halaman HTML yang sudah dimodifikasi secara dinamis ke browser tamu
         return res.send(htmlContent);
+    
 
     } catch (err) {
         return res.status(500).send('Server Error');
