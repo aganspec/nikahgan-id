@@ -1,0 +1,12 @@
+{
+  "name": "nikahgan-id",
+  "version": "1.0.0",
+  "description": "Platform Undangan Digital Nikahgan.id",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
