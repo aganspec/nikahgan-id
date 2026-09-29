@@ -81,7 +81,8 @@ app.post('/api/rsvp', (req, res) => {
     res.redirect(`/${wedding.slug}`);
 });
 // 3. ROUTING REGISTER: Menangani Pendaftaran Akun Pengantin Baru
-app.post('/api/register', (req, res) => {
+app.post('/register', (req, res) => {
+    
     const { nama, email, whatsapp, password } = req.body;
 
     // Validasi sederhana untuk memastikan data terisi semua
