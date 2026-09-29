@@ -7,9 +7,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Inisialisasi Supabase menggunakan Environment Variables dari Vercel
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// Kode ini otomatis membersihkan spasi atau tanda garis miring (/) di akhir URL
+const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+const supabaseUrl = rawUrl.replace(/\/\$/, '').trim(); 
 
+const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
+const supabaseKey = rawKey.trim();
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -20,24 +23,25 @@ app.use(express.json());
 // Melayani berkas statis dari folder utama
 app.use(express.static(__dirname));
 
-// RUTE HALAMAN UTAMA (Menampilkan Form Pendaftaran Anda)
+// RUTE HALAMAN UTAMA (Menampilkan Form Pendaftaran)
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// 1. RUTE PENDAFTARAN (Menyimpan data otomatis ke tabel users & weddings di Supabase)
+// 1. RUTE PENDAFTARAN (Menyimpan data ke tabel 'users' & 'weddings')
 app.post('/register', async (req, res) => {
-    const { nama, email, whatsapp, password } = req.body;
-
-    if (!nama || !email || !whatsapp || !password) {
-        return res.status(400).json({ success: false, message: "Semua kolom pendaftaran wajib diisi!" });
-    }
-
     try {
-        // Membuat nama slug otomatis (Contoh: "Tes Admin" -> "tes-admin")
+        const { nama, email, whatsapp, password } = req.body;
+
+        // Validasi input kosong
+        if (!nama || !email || !whatsapp || !password) {
+            return res.status(400).json({ success: false, message: "Semua kolom pendaftaran wajib diisi!" });
+        }
+
+        // Membuat nama slug otomatis untuk URL undangan (Contoh: "Tes Admin" -> "tes-admin")
         const slug = nama.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-\$)+/g, '');
 
-        // MASUKKAN DATA KE TABEL 'users'
+        // A. MASUKKAN DATA KE TABEL 'users'
         const { data: newUser, error: userError } = await supabase
             .from('users')
             .insert([
@@ -47,28 +51,30 @@ app.post('/register', async (req, res) => {
             .single();
 
         if (userError) {
+            // Cek jika email sudah terdaftar (Error code 23505 adalah Unique Violation di PostgreSQL)
             if (userError.code === '23505') {
                 return res.status(400).json({ success: false, message: "Email ini sudah terdaftar! Gunakan email lain." });
             }
             throw userError;
         }
 
-        // MASUKKAN DATA DATA AWAL KE TABEL 'weddings'
+        // B. MASUKKAN DATA AWAL KE TABEL 'weddings'
         const { error: weddingError } = await supabase
             .from('weddings')
             .insert([
-                { 
-                    user_id: newUser.id, 
-                    slug: slug, 
-                    mempelai_pria: nama, 
-                    mempelai_wanita: "Pasangan", 
-                    tanggal_acara: new Date().toISOString().split('T')[0], // Tanggal format YYYY-MM-DD
+                {
+                    user_id: newUser.id,
+                    slug: slug,
+                    mempelai_pria: nama,
+                    mempelai_wanita: "Pasangan",
+                    tanggal_acara: new Date().toISOString().split('T')[0], // Mengambil format YYYY-MM-DD yang benar
                     background_tema: "default"
                 }
             ]);
 
         if (weddingError) throw weddingError;
 
+        // Jika semua proses berhasil
         return res.status(200).json({
             success: true,
             message: "Pendaftaran akun berhasil!",
@@ -76,51 +82,16 @@ app.post('/register', async (req, res) => {
         });
 
     } catch (err) {
-        return res.status(500).json({ success: false, message: err.message });
+        // Mencetak log kesalahan mendalam di dashboard Vercel Anda agar tidak blank
+        console.error("Detail Eror pada /register:", err.message || err);
+        return res.status(500).json({ 
+            success: false, 
+            message: err.message || "Terjadi kesalahan internal server." 
+        });
     }
 });
 
-// 2. RUTE HALAMAN UNDANGAN DINAMIS (Mengambil data nyata dari Supabase)
-app.get('/:slug', async (req, res) => {
-    const currentSlug = req.params.slug;
-    const guestName = req.query.to || "Tamu Undangan";
-
-    try {
-        // Ambil data dari tabel weddings berdasarkan slug
-        const { data: weddingData, error } = await supabase
-            .from('weddings')
-            .select('*')
-            .eq('slug', currentSlug)
-            .single();
-
-        // Jika data tidak ditemukan di database Supabase
-        if (error || !weddingData) {
-            return res.status(404).send('<h1>Maaf, halaman undangan nikahgan.id tidak ditemukan.</h1>');
-        }
-
-        // Membaca berkas undangan.html secara aman dari folder views
-        const templatePath = path.join(__dirname, 'views', 'undangan.html');
-        
-        if (!fs.existsSync(templatePath)) {
-            return res.status(500).send('<h1>Error: Berkas template undangan.html tidak ditemukan di folder views.</h1>');
-        }
-
-        let htmlContent = fs.readFileSync(templatePath, 'utf8');
-
-        // MENGGANTI PLACEHOLDER HTML MENJADI TEKS NYATA DARI DATABASE
-        htmlContent = htmlContent.replace(/{{MEMPELAI_PRIA}}/g, weddingData.mempelai_pria);
-        htmlContent = htmlContent.replace(/{{MEMPELAI_WANITA}}/g, weddingData.mempelai_wanita);
-        htmlContent = htmlContent.replace(/{{NAMA_TAMU_OTOMATIS}}/g, guestName);
-
-        return res.send(htmlContent);
-
-    } catch (err) {
-        return res.status(500).send(`<h1>Terjadi kesalahan server: ${err.message}</h1>`);
-    }
-});
-
-// Jalankan Server
+// Menjalankan server lokal (jika tidak dijalankan di Vercel)
 app.listen(PORT, () => {
-    console.log(`Server aktif pada port ${PORT}`);
+    console.log(`Server berjalan di port ${PORT}`);
 });
-            
