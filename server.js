@@ -13,6 +13,7 @@ const supabaseUrl = rawUrl.replace(/\/$/, '').trim();
 
 
 
+
 const rawKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
 const supabaseKey = rawKey.trim();
 
