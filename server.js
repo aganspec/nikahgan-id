@@ -7,8 +7,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Inisialisasi Supabase menggunakan Environment Variables dari Vercel
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Middleware dasar untuk membaca data form & JSON
