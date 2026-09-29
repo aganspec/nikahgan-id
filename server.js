@@ -7,6 +7,10 @@ const PORT = process.env.PORT || 3000;
 // Middleware wajib untuk membaca data form (RSVP) & JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// ROUTE HALAMAN UTAMA: Menyajikan file index.html saat pertama kali web dibuka
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // // DATA SIMULASI (Bisa dihubungkan ke Database nantinya)
 const database = {
