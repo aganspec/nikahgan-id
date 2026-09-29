@@ -10,4 +10,4 @@
     "@supabase/supabase-js": "^2.39.0",
     "express": "^4.19.2"
   }
-}
+
