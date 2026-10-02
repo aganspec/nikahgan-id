@@ -153,3 +153,37 @@
 
             if(!error) {
                 alert(`Undangan Berhasil Dibuat! Cek versi live preview penuh Anda di: url_anda/undangan.html?id=${slug}`);
+async function checkoutPackage(amount, packageName) {
+    // 1. Ambil data pengantin yang sedang aktif diinput konsumen
+    const pria = document.getElementById('input-pria').value;
+    const wanita = document.getElementById('input-wanita').value;
+    const slug = `${pria.toLowerCase()}-${wanita.toLowerCase()}`;
+
+    try {
+        // 2. Lakukan request ke server backend Anda untuk generate invoice resmi
+        // Ganti 'http://localhost:3000' dengan URL server production Anda nanti (misal Render/Railway)
+        const response = await fetch('http://localhost:3000/api/create-invoice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                amount: parseInt(amount),
+                packageName: packageName,
+                slug: slug,
+                email: 'customer@gmail.com' // Idealnya diambil dari data session login user
+            })
+        });
+
+        const invoiceData = await response.json();
+
+        if (invoiceData && invoiceData.invoice_url) {
+            // 3. Buka halaman pembayaran resmi Xendit di tab baru
+            window.open(invoiceData.invoice_url, '_blank');
+        } else {
+            alert('Gagal membuat tagihan pembayaran. Sila hubungi admin.');
+        }
+    } catch (error) {
+        console.error("Error Checkout:", error);
+        alert('Terjadi kesalahan koneksi server backend.');
+    }
+                }
+                
