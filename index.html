@@ -1,38 +1,155 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NikahGan.id - Builder Paleo</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikahgan.id - Platform Undangan Digital No. 1</title>
+    <script src="https://tailwindcss.com"></script>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        .font-script { font-family: 'Great Vibes', cursive; }
+        .font-sans { font-family: 'Poppins', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
 </head>
-<body class="bg-[#fdfbf7]">
-<script>
-const SUPA_URL = "https://xkavdolkcaagimnhaibt.supabase.co";
-const SUPA_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhrYXZkb2xrY2FhZ2ltbmlhaWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1ODM3MDcsImV4cCI6MjEwNjE1OTcwN30.p3t96xEumXdpxJWbi7eAmjFWMhb2_nEYITgvro4YaTI";
-const supa = window.supabase.createClient(SUPA_URL, SUPA_ANON);
-</script>
-<div class="max-w-[420px] mx-auto min-h-screen bg-white shadow-xl p-6">
-<h1 class="text-2xl font-black">NikahGan<span class="text-orange-500">.id</span></h1>
-<p class="text-xs text-zinc-500">Spek paleo.id - 5 Langkah</p>
-<div class="flex gap-1.5 mt-6 mb-8"><div id="b1" class="h-2 flex-1 bg-black rounded-full"></div><div id="b2" class="h-2 flex-1 bg-zinc-200 rounded-full"></div><div id="b3" class="h-2 flex-1 bg-zinc-200 rounded-full"></div><div id="b4" class="h-2 flex-1 bg-zinc-200 rounded-full"></div><div id="b5" class="h-2 flex-1 bg-zinc-200 rounded-full"></div></div>
+<body class="font-sans bg-stone-50 text-stone-800 antialiased">
 
-<div id="step1" class="space-y-4"><h2 class="font-bold">1/5 Data Mempelai</h2><input id="pria" placeholder="Nama Pria" class="w-full border p-3.5 rounded-xl"><input id="wanita" placeholder="Nama Wanita" class="w-full border p-3.5 rounded-xl"><input id="wa" placeholder="WA 08..." class="w-full border p-3.5 rounded-xl"><button onclick="go(2)" class="w-full bg-black text-white p-4 rounded-xl font-bold">Lanjut →</button></div>
+    <!-- NAVBAR -->
+    <nav class="bg-white border-b border-stone-200 sticky top-0 z-40 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-2xl font-extrabold text-amber-800">Nikah<span class="text-stone-700">gan.id</span></div>
+            <button onclick="saveWeddingData()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-5 py-2.5 rounded-full transition shadow-md flex items-center gap-2">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Simpan & Buat Link
+            </button>
+        </div>
+    </nav>
 
-<div id="step2" class="space-y-4 hidden"><h2 class="font-bold">2/5 Akad & Resepsi</h2><input id="tgl" type="date" class="w-full border p-3.5 rounded-xl"><input id="jam" type="time" class="w-full border p-3.5 rounded-xl"><input id="lokasi" placeholder="Lokasi" class="w-full border p-3.5 rounded-xl"><button onclick="go(3)" class="w-full bg-black text-white p-4 rounded-xl font-bold">Lanjut →</button></div>
+    <!-- MAIN EDITOR HUB -->
+    <section class="py-8 px-4 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- PANEL KIRI: INPUT DATA -->
+            <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-stone-200 space-y-6 max-h-[82vh] overflow-y-auto no-scrollbar">
+                <div>
+                    <h1 class="text-lg font-bold text-stone-900">Dasbor Pengeditan</h1>
+                    <p class="text-xs text-stone-500">Data ter-update langsung ke simulator *handphone* di sebelah kanan.</p>
+                </div>
 
-<div id="step3" class="space-y-4 hidden"><h2 class="font-bold">3/5 Tema</h2><div class="grid grid-cols-2 gap-3"><div onclick="pick('adat')" id="t-adat" class="border-2 border-black bg-zinc-50 p-4 rounded-xl text-center font-bold">Adat</div><div onclick="pick('modern')" id="t-modern" class="border-2 p-4 rounded-xl text-center font-bold">Modern</div></div><button onclick="go(4)" class="w-full bg-black text-white p-4 rounded-xl font-bold">Lanjut →</button></div>
+                <div class="space-y-4 pt-4 border-t">
+                    <h2 class="text-xs font-bold text-stone-400 uppercase tracking-wider"><i class="fa-solid fa-user-friends text-amber-600 mr-1"></i> 1. Informasi Mempelai</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-semibold mb-1">Panggilan Pria</label>
+                            <input type="text" id="input-pria" oninput="updateLivePreview()" value="Rian" class="w-full text-xs px-3 py-2.5 bg-stone-50 border rounded-xl focus:outline-none focus:border-amber-600">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold mb-1">Panggilan Wanita</label>
+                            <input type="text" id="input-wanita" oninput="updateLivePreview()" value="Siska" class="w-full text-xs px-3 py-2.5 bg-stone-50 border rounded-xl focus:outline-none focus:border-amber-600">
+                        </div>
+                    </div>
+                </div>
 
-<div id="step4" class="space-y-4 hidden"><h2 class="font-bold">4/5 Fitur</h2><label class="flex justify-between border p-3 rounded-xl"><span>Maps</span><input type="checkbox" id="f_maps" checked></label><label class="flex justify-between border p-3 rounded-xl"><span>Musik</span><input type="checkbox" id="f_music" checked></label><label class="flex justify-between border p-3 rounded-xl"><span>Galeri (Premium)</span><input type="checkbox" id="f_galeri"></label><button onclick="go(5)" class="w-full bg-black text-white p-4 rounded-xl font-bold">Simpan & Bayar →</button></div>
+                <div class="space-y-4 pt-4 border-t">
+                    <h2 class="text-xs font-bold text-stone-400 uppercase tracking-wider"><i class="fa-solid fa-calendar-alt text-amber-600 mr-1"></i> 2. Tanggal & Lokasi</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-semibold mb-1">Tanggal Pernikahan</label>
+                            <input type="date" id="input-tanggal" onchange="updateLivePreview()" value="2026-12-15" class="w-full text-xs px-3 py-2.5 bg-stone-50 border rounded-xl focus:outline-none focus:border-amber-600">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-semibold mb-1">Waktu / Jam</label>
+                            <input type="text" id="input-jam" oninput="updateLivePreview()" value="08:00 - 14:00 WIB" class="w-full text-xs px-3 py-2.5 bg-stone-50 border rounded-xl focus:outline-none focus:border-amber-600">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold mb-1">Nama Tempat / Gedung</label>
+                        <input type="text" id="input-lokasi" oninput="updateLivePreview()" value="Hotel Grand Imperial, Tangerang" class="w-full text-xs px-3 py-2.5 bg-stone-50 border rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                </div>
 
-<div id="step5" class="space-y-4 hidden"><h2 class="font-bold">5/5 Bayar</h2><div id="status" class="p-3 bg-zinc-100 rounded-xl text-sm">Menyimpan...</div><a id="linkBasic" href="https://lynk.id" target="_blank" class="block border-2 border-black p-4 rounded-xl text-center font-bold">Basic 75K</a><a id="linkPrem" href="https://lynk.id" target="_blank" class="block bg-black text-white p-4 rounded-xl text-center font-bold">Premium 132K</a></div>
-</div>
+                <div class="space-y-4 pt-4 border-t">
+                    <h2 class="text-xs font-bold text-stone-400 uppercase tracking-wider"><i class="fa-solid fa-wand-magic-sparkles text-amber-600 mr-1"></i> 3. Pilih Tema (100+ Live Catalog)</h2>
+                    <div id="theme-grid" class="grid grid-cols-3 gap-2"></div>
+                </div>
+            </div>
 
-<script>
-let builder={tema:'adat'};
-function go(n){document.querySelectorAll('[id^=step]').forEach(e=>e.classList.add('hidden'));document.getElementById('step'+n).classList.remove('hidden');for(let i=1;i<=5;i++)document.getElementById('b'+i).className=i<=n?'h-2 flex-1 bg-black rounded-full':'h-2 flex-1 bg-zinc-200 rounded-full';if(n==5)save();}
-function pick(t){builder.tema=t;document.querySelectorAll('[id^=t-]').forEach(x=>x.classList.remove('border-black','bg-zinc-50'));document.getElementById('t-'+t).classList.add('border-black','bg-zinc-50');}
-async function save(){builder.pria=document.getElementById('pria').value;builder.wanita=document.getElementById('wanita').value;builder.wa=document.getElementById('wa').value;builder.tgl=document.getElementById('tgl').value;builder.jam=document.getElementById('jam').value;builder.lokasi=document.getElementById('lokasi').value;builder.fitur={maps:document.getElementById('f_maps').checked,music:document.getElementById('f_music').checked,galeri:document.getElementById('f_galeri').checked};const s=document.getElementById('status');try{const{data,error}=await supa.from('invitations').insert([{data_json:builder}]).select();if(error)throw error;s.innerHTML='✅ Tersimpan ID: '+data[0].id.slice(0,8);s.className='p-3 bg-green-100 text-green-700 rounded-xl text-sm';const name=(builder.pria+'-'+builder.wanita).toLowerCase().replace(/ /g,'-');document.getElementById('linkBasic').href='https://lynk.id/checkout/nikahgan-basic?notes='+encodeURIComponent(name);document.getElementById('linkPrem').href='https://lynk.id/checkout/nikahgan-premium?notes='+encodeURIComponent(name);}catch(e){s.innerHTML='❌ '+e.message;s.className='p-3 bg-red-100 text-red-700 rounded-xl text-sm';}}
-</script>
-</body>
-</html>
+            <!-- PANEL KANAN: SIMULATOR MOCKUP HP -->
+            <div class="lg:col-span-7 flex flex-col items-center">
+                <div class="w-[360px] h-[700px] bg-stone-950 rounded-[48px] p-3 shadow-2xl border-[6px] border-stone-800 relative">
+                    <div class="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-4 bg-stone-800 rounded-full z-30"></div>
+                    <div id="phone-screen" class="w-full h-full bg-stone-900 text-white rounded-[38px] overflow-y-auto relative no-scrollbar scroll-smooth">
+                        <div class="relative h-full flex flex-col items-center justify-center text-center p-6 bg-cover bg-center shrink-0" id="preview-bg-cover" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://unsplash.com')">
+                            <span class="text-[9px] tracking-widest uppercase mb-1 text-amber-400 font-semibold">The Wedding Of</span>
+                            <h1 id="preview-nama" class="font-script text-5xl my-3 text-amber-100">Rian & Siska</h1>
+                            <p id="preview-tanggal-cover" class="text-[11px] text-amber-300 font-medium">Selasa, 15 Desember 2026</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PRICING PACKAGES -->
+    <section id="packages" class="py-16 px-6 bg-stone-100 border-t">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="font-script text-5xl text-amber-800 mb-6">Pilihan Paket Aktivasi</h2>
+            <div id="pricing-wrapper" class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
+                <!-- Paket Terpilih Otomatis Merender Pembayaran Melalui Gateway -->
+                <div class="bg-white p-6 rounded-2xl border border-stone-200 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <h3 class="text-base font-bold text-stone-800">Paket Pro 30 Hari</h3>
+                        <span class="text-2xl font-extrabold text-stone-900 block my-2">Rp 59.000</span>
+                        <p class="text-[11px] text-stone-500">Masa aktif sebulan penuh dengan kuota kirim tamu tak terbatas.</p>
+                    </div>
+                    <button onclick="checkoutPackage('59000', 'Pro 30')" class="mt-6 w-full py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-xl shadow-sm text-center block">Aktifkan Paket via Xendit</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co"; 
+        const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";          
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let selectedThemeId = "1";
+
+        async function loadThemes() {
+            const { data: themes } = await supabase.from('themes').select('*');
+            const grid = document.getElementById('theme-grid');
+            grid.innerHTML = '';
+            themes?.forEach(t => {
+                grid.innerHTML += `
+                    <div onclick="applyTheme('${t.id}', '${t.background_url}', '${t.styles}')" class="border rounded-xl p-0.5 bg-white cursor-pointer hover:border-amber-500">
+                        <img src="${t.thumbnail_url}" class="w-full h-12 object-cover rounded-lg">
+                        <div class="text-[9px] text-center font-semibold mt-1 text-stone-700 truncate px-1">${t.name}</div>
+                    </div>`;
+            });
+        }
+
+        function applyTheme(id, bgUrl, styleClass) {
+            selectedThemeId = id;
+            document.getElementById('preview-bg-cover').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url('${bgUrl}')`;
+            document.getElementById('preview-nama').className = `font-script text-5xl my-3 ${styleClass}`;
+        }
+
+        function updateLivePreview() {
+            const pria = document.getElementById('input-pria').value;
+            const wanita = document.getElementById('input-wanita').value;
+            document.getElementById('preview-nama').innerText = `${pria} & ${wanita}`;
+        }
+
+        async function saveWeddingData() {
+            const pria = document.getElementById('input-pria').value;
+            const wanita = document.getElementById('input-wanita').value;
+            const slug = `${pria.toLowerCase()}-${wanita.toLowerCase()}`;
+
+            const { error } = await supabase.from('weddings').insert([{
+                nama_pria: pria, nama_wanita: wanita, slug: slug, theme_id: selectedThemeId, status_undangan: 'free'
+            }]);
+
+            if(!error) {
+                alert(`Undangan Berhasil Dibuat! Cek versi live preview penuh Anda di: url_anda/undangan.html?id=${slug}`);
