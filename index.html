@@ -1,72 +1,38 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NikahGan.id - Buat Undangan Digital</title>
-<script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
-<div class="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
-<h1 class="text-2xl font-bold text-center">Daftar Akun Pengantin</h1>
-<p class="text-center text-gray-500 text-sm mb-6 mt-2">Mulai langkah awal untuk membuat undangan digital Anda</p>
-
-<form id="daftarForm" class="space-y-4">
-<div>
-<label class="text-xs font-bold text-gray-600">NAMA LENGKAP</label>
-<input id="nama" required class="w-full mt-1 border rounded-lg p-3" placeholder="Contoh: Tes Admin">
-</div>
-<div>
-<label class="text-xs font-bold text-gray-600">EMAIL</label>
-<input id="email" type="email" required class="w-full mt-1 border rounded-lg p-3" placeholder="contoh@nikahgan.id">
-</div>
-<div>
-<label class="text-xs font-bold text-gray-600">NOMOR WHATSAPP</label>
-<input id="wa" required class="w-full mt-1 border rounded-lg p-3" placeholder="Contoh: 085711167888">
-</div>
-<div>
-<label class="text-xs font-bold text-gray-600">PASSWORD</label>
-<input id="pass" type="password" required class="w-full mt-1 border rounded-lg p-3" placeholder="••••••">
-</div>
-<button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-xl mt-2">Buat Akun Sekarang</button>
-</form>
-
-<div id="sukses" class="hidden text-center">
-<div class="text-5xl mb-4">✅</div>
-<h2 class="text-xl font-bold">BERHASIL BOS!</h2>
-<p class="text-sm text-gray-500 mt-2">Akun <span id="sNama"></span> tersimpan</p>
-<p class="text-xs mt-4">Redirect ke pembayaran...</p>
-</div>
-
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-document.getElementById('daftarForm').addEventListener('submit', function(e){
- e.preventDefault();
- const data = {
-   nama: document.getElementById('nama').value,
-   email: document.getElementById('email').value,
-   wa: document.getElementById('wa').value,
-   pass: document.getElementById('pass').value,
-   tanggal: new Date().toLocaleString()
- };
- localStorage.setItem('nikahgan_user', JSON.stringify(data));
- 
- // Tampilkan sukses
- document.getElementById('daftarForm').classList.add('hidden');
- document.getElementById('sNama').innerText = data.nama;
- document.getElementById('sukses').classList.remove('hidden');
- 
- // SIMPAN LOG KE CONSOLE BUAT CEK
- console.log('DATA TERSIMPAN:', data);
+const supabaseUrl = 'https://xxx.supabase.co' // ganti punya lu
+const supabaseKey = 'eyJxxx...' // ganti anon key punya lu
+const supabase = supabaseJs.createClient(supabaseUrl, supabaseKey)
 
- // REDIRECT KE HALAMAN BAYAR SETELAH 1.5 DETIK
+document.getElementById('daftarForm').addEventListener('submit', async function(e){
+ e.preventDefault()
+ const nama = document.getElementById('nama').value
+ const email = document.getElementById('email').value
+ const wa = document.getElementById('wa').value
+ const pass = document.getElementById('pass').value
+
+ // 1. Daftar ke Supabase Auth
+ const { data, error } = await supabase.auth.signUp({
+   email: email,
+   password: pass,
+   options: { data: { nama: nama, wa: wa } }
+ })
+
+ if(error){
+   alert('Gagal: ' + error.message)
+   return
+ }
+
+ // 2. Simpen tambahan ke table profiles
+ await supabase.from('profiles').insert([{ email: email, nama: nama, wa: wa }])
+
+ // 3. Sukses
+ document.getElementById('daftarForm').classList.add('hidden')
+ document.getElementById('sNama').innerText = nama
+ document.getElementById('sukses').classList.remove('hidden')
+
  setTimeout(()=>{
-   // GANTI INI JADI HALAMAN PRICING LU
-   alert('✅ Data '+data.nama+' tersimpan!\n\nEmail: '+data.email+'\nWA: '+data.wa+'\n\nSelanjutnya: Halaman Paket 75K / 132K\nBayar ke Allo Bank 085711167889');
-   // window.location.href = '/pricing.html';
- }, 1500);
-});
+   window.location.href = '/login.html' // atau /pricing.html
+ }, 1500)
+})
 </script>
-</body>
-</html>
