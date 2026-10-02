@@ -1,38 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NikahGan.id - Builder Paleo</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-[#fdfbf7]">
 <script>
-const supabaseUrl = 'https://xxx.supabase.co' // ganti punya lu
-const supabaseKey = 'eyJxxx...' // ganti anon key punya lu
-const supabase = supabaseJs.createClient(supabaseUrl, supabaseKey)
-
-document.getElementById('daftarForm').addEventListener('submit', async function(e){
- e.preventDefault()
- const nama = document.getElementById('nama').value
- const email = document.getElementById('email').value
- const wa = document.getElementById('wa').value
- const pass = document.getElementById('pass').value
-
- // 1. Daftar ke Supabase Auth
- const { data, error } = await supabase.auth.signUp({
-   email: email,
-   password: pass,
-   options: { data: { nama: nama, wa: wa } }
- })
-
- if(error){
-   alert('Gagal: ' + error.message)
-   return
- }
-
- // 2. Simpen tambahan ke table profiles
- await supabase.from('profiles').insert([{ email: email, nama: nama, wa: wa }])
-
- // 3. Sukses
- document.getElementById('daftarForm').classList.add('hidden')
- document.getElementById('sNama').innerText = nama
- document.getElementById('sukses').classList.remove('hidden')
-
- setTimeout(()=>{
-   window.location.href = '/login.html' // atau /pricing.html
- }, 1500)
-})
+const SUPA_URL = "https://xkavdolkcaagimnhaibt.supabase.co";
+const SUPA_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhrYXZkb2xrY2FhZ2ltbmlhaWJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA1ODM3MDcsImV4cCI6MjEwNjE1OTcwN30.p3t96xEumXdpxJWbi7eAmjFWMhb2_nEYITgvro4YaTI";
+const supa = window.supabase.createClient(SUPA_URL, SUPA_ANON);
 </script>
+<div class="max-w-[420px] mx-auto min-h-screen bg-white shadow-xl p-6">
+<h1 class="text-2xl font-black">NikahGan<span class="text-orange-500">.id</span></h1>
+<p class="text-xs text-zinc-500">Spek paleo.id - 5 Langkah</p>
+<div class="flex gap-1.5 mt-6 mb-8"><div id="b1" class="h-2 flex-1 bg-black rounded-full"></div><div id="b2" class="h-2 flex-1 bg-zinc-200 rounded-full"></div><div id="b3" class="h-2 flex-1 bg-zinc-200 rounded-full"></div><div id="b4" class="h-2 flex-1 bg-zinc-200 rounded-full"></div><div id="b5" class="h-2 flex-1 bg-zinc-200 rounded-full"></div></div>
+
+<div id="step1" class="space-y-4"><h2 class="font-bold">1/5 Data Mempelai</h2><input id="pria" placeholder="Nama Pria" class="w-full border p-3.5 rounded-xl"><input id="wanita" placeholder="Nama Wanita" class="w-full border p-3.5 rounded-xl"><input id="wa" placeholder="WA 08..." class="w-full border p-3.5 rounded-xl"><button onclick="go(2)" class="w-full bg-black text-white p-4 rounded-xl font-bold">Lanjut →</button></div>
+
+<div id="step2" class="space-y-4 hidden"><h2 class="font-bold">2/5 Akad & Resepsi</h2><input id="tgl" type="date" class="w-full border p-3.5 rounded-xl"><input id="jam" type="time" class="w-full border p-3.5 rounded-xl"><input id="lokasi" placeholder="Lokasi" class="w-full border p-3.5 rounded-xl"><button onclick="go(3)" class="w-full bg-black text-white p-4 rounded-xl font-bold">Lanjut →</button></div>
+
+<div id="step3" class="space-y-4 hidden"><h2 class="font-bold">3/5 Tema</h2><div class="grid grid-cols-2 gap-3"><div onclick="pick('adat')" id="t-adat" class="border-2 border-black bg-zinc-50 p-4 rounded-xl text-center font-bold">Adat</div><div onclick="pick('modern')" id="t-modern" class="border-2 p-4 rounded-xl text-center font-bold">Modern</div></div><button onclick="go(4)" class="w-full bg-black text-white p-4 rounded-xl font-bold">Lanjut →</button></div>
+
+<div id="step4" class="space-y-4 hidden"><h2 class="font-bold">4/5 Fitur</h2><label class="flex justify-between border p-3 rounded-xl"><span>Maps</span><input type="checkbox" id="f_maps" checked></label><label class="flex justify-between border p-3 rounded-xl"><span>Musik</span><input type="checkbox" id="f_music" checked></label><label class="flex justify-between border p-3 rounded-xl"><span>Galeri (Premium)</span><input type="checkbox" id="f_galeri"></label><button onclick="go(5)" class="w-full bg-black text-white p-4 rounded-xl font-bold">Simpan & Bayar →</button></div>
+
+<div id="step5" class="space-y-4 hidden"><h2 class="font-bold">5/5 Bayar</h2><div id="status" class="p-3 bg-zinc-100 rounded-xl text-sm">Menyimpan...</div><a id="linkBasic" href="https://lynk.id" target="_blank" class="block border-2 border-black p-4 rounded-xl text-center font-bold">Basic 75K</a><a id="linkPrem" href="https://lynk.id" target="_blank" class="block bg-black text-white p-4 rounded-xl text-center font-bold">Premium 132K</a></div>
+</div>
+
+<script>
+let builder={tema:'adat'};
+function go(n){document.querySelectorAll('[id^=step]').forEach(e=>e.classList.add('hidden'));document.getElementById('step'+n).classList.remove('hidden');for(let i=1;i<=5;i++)document.getElementById('b'+i).className=i<=n?'h-2 flex-1 bg-black rounded-full':'h-2 flex-1 bg-zinc-200 rounded-full';if(n==5)save();}
+function pick(t){builder.tema=t;document.querySelectorAll('[id^=t-]').forEach(x=>x.classList.remove('border-black','bg-zinc-50'));document.getElementById('t-'+t).classList.add('border-black','bg-zinc-50');}
+async function save(){builder.pria=document.getElementById('pria').value;builder.wanita=document.getElementById('wanita').value;builder.wa=document.getElementById('wa').value;builder.tgl=document.getElementById('tgl').value;builder.jam=document.getElementById('jam').value;builder.lokasi=document.getElementById('lokasi').value;builder.fitur={maps:document.getElementById('f_maps').checked,music:document.getElementById('f_music').checked,galeri:document.getElementById('f_galeri').checked};const s=document.getElementById('status');try{const{data,error}=await supa.from('invitations').insert([{data_json:builder}]).select();if(error)throw error;s.innerHTML='✅ Tersimpan ID: '+data[0].id.slice(0,8);s.className='p-3 bg-green-100 text-green-700 rounded-xl text-sm';const name=(builder.pria+'-'+builder.wanita).toLowerCase().replace(/ /g,'-');document.getElementById('linkBasic').href='https://lynk.id/checkout/nikahgan-basic?notes='+encodeURIComponent(name);document.getElementById('linkPrem').href='https://lynk.id/checkout/nikahgan-premium?notes='+encodeURIComponent(name);}catch(e){s.innerHTML='❌ '+e.message;s.className='p-3 bg-red-100 text-red-700 rounded-xl text-sm';}}
+</script>
+</body>
+</html>
